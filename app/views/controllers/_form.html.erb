@@ -1,0 +1,22 @@
+<%= form_with(model: controller) do |form| %>
+  <% if controller.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(controller.errors.count, "error") %> prohibited this controller from being saved:</h2>
+
+      <ul>
+        <% controller.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :Game, style: "display: block" %>
+    <%= form.text_field :Game %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
