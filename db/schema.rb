@@ -10,13 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_22_002845) do
-  create_table "controllers", force: :cascade do |t|
-    t.string "Game"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
+ActiveRecord::Schema[7.0].define(version: 2022_03_22_003627) do
   create_table "game_genres", force: :cascade do |t|
     t.integer "Game_id", null: false
     t.integer "Genre_id", null: false
