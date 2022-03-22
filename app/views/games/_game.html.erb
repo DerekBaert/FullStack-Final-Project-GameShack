@@ -1,12 +1,12 @@
 <div class="column">
     <div class="card">
         <div class="card-content">
-                <p class="title is-4">
+                <p class="card-header-title is-centered">
                     <%= link_to game.name, game %>
                 </p>        
             <% if game.image.present? %>
-                <div class="card-image">
-                    <%= image_tag(game.image, :size => '600x600')%>
+                <div class="card-image is-centered">
+                    <%= image_tag(game.image, :size => '200x200')%>
                 </div>
             <% end %>        
             <footer class="card-footer">
