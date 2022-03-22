@@ -1,14 +1,8 @@
 <p style="color: green"><%= notice %></p>
 
 <h1>Games</h1>
-
-<div id="games">
-  <% @games.each do |game| %>
-    <%= render game %>
-    <p>
-      <%= link_to "Show this game", game %>
-    </p>
+<div class="columns">
+  <% @games.each do |g| %>
+    <%= render partial: "game", object: g %>    
   <% end %>
 </div>
-
-<%= link_to "New game", new_game_path %>

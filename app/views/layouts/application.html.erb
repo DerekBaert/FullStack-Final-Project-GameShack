@@ -7,10 +7,23 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
+    <nav class="navbar is-danger" aria-label="main navigation">
+      <div class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href=<%=games_path%>>
+            Games
+          </a>
+          <a class="navbar-item" href=<%=platforms_path%>>
+            Platforms
+          </a>     
+        </div>
+      </div>
+    </nav>
     <%= yield %>
   </body>
 </html>

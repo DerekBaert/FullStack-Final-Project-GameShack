@@ -1,2 +1,21 @@
-<div id="<%= dom_id game %>">
+<div class="column">
+    <div class="card">
+        <div class="card-content">
+                <p class="title is-4">
+                    <%= link_to game.name, game %>
+                </p>        
+            <% if game.image.present? %>
+                <div class="card-image">
+                    <%= image_tag(game.image, :size => '600x600')%>
+                </div>
+            <% end %>        
+            <footer class="card-footer">
+                <% if game.age_rating.present? %>
+                    <%= game.age_rating %>
+                <% end %> 
+                <br>
+                $<%= game.price %>
+            </footer>
+        </div>
+    </div>
 </div>
