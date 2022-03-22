@@ -13,13 +13,13 @@ Game.delete_all
 Genre.delete_all
 Platform.delete_all
 
-
+ratings = ["Everyone", "Teen", "Mature"]
 for i in 0..49    
-    game = Game.create(
-        name: Faker::Game.title,
-        price: Faker::Commerce.price(range: 59.99..89.99),
-        description: Faker::Lorem.paragraph(sentence_count: 2)
-    )
+    game = Game.find_or_create_by(name: Faker::Game.title)
+    game.price = Faker::Commerce.price(range: 59.99..89.99)
+    game.description = Faker::Lorem.paragraph(sentence_count: 2)
+    game.age_rating = ratings.sample
+    game.save
     image = URI.open("https://source.unsplash.com/600x600/?#{URI.escape(game.name)}")
     game.image.attach(io: image, filename:"#{game.name}.jpg")
     for j in 0..1
@@ -30,7 +30,7 @@ for i in 0..49
     for j in 0..1
         platform = Platform.find_or_create_by(name: Faker::Game.platform)
         if(!platform.price)
-            platform.price = Faker::Commerce.price(range: 199.99..699.99)
+            platform.price = Faker::Commerce.price(range: 199.99..699.99).round(2)
         end
         if(!platform.description)
             platform.description = Faker::Lorem.paragraph(sentence_count: 2)

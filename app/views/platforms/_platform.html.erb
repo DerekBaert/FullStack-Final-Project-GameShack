@@ -1,17 +1,17 @@
-<div id="<%= dom_id platform %>">
-  <p>
-    <strong>Name:</strong>
-    <%= platform.name %>
-  </p>
-
-  <p>
-    <strong>Description:</strong>
-    <%= platform.description %>
-  </p>
-
-  <p>
-    <strong>Price:</strong>
-    <%= platform.price %>
-  </p>
-
+<div class="column">
+    <div class="card">
+        <div class="card-content">
+                <p class="subtitle is-6 is-centered">
+                    <%= link_to platform.name, platform %>
+                </p>        
+            <% if platform.image.present? %>
+                <div class="card-image has-text-centered">
+                    <%= image_tag(platform.image, :size => '200x200')%>
+                </div>
+            <% end %>        
+            <footer class="card-footer is-centered">    
+              <p class="card-footer-item"><%= number_to_currency(platform.price) %></p>     
+            </footer>
+        </div>
+    </div>
 </div>

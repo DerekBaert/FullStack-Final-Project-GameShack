@@ -1,10 +1,21 @@
 <p style="color: green"><%= notice %></p>
+<div class="card m-3">  
+  <div class="card-content has-text-centered">
+    <%= image_tag(@platform.image, :size => '200x200')%> 
+    <div class="media-content">
+      <p class="title is-4">
+        <%= @platform.name %>
+      </p> 
+      <p>
+        <%= @platform.description %>
+      </p>
+    </div>        
+  </div>
 
-<%= render @platform %>
+</div>  
 
 <div>
   <%= link_to "Edit this platform", edit_platform_path(@platform) %> |
   <%= link_to "Back to platforms", platforms_path %>
-
   <%= button_to "Destroy this platform", @platform, method: :delete %>
 </div>

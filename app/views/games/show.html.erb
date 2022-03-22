@@ -1,7 +1,27 @@
 <p style="color: green"><%= notice %></p>
-
-<%= render @game %>
-
+<div class="card m-3">  
+  <div class="card-content has-text-centered">
+    <%= image_tag(@game.image, :size => '200x200')%> 
+    <div class="media-content">
+      <p class="title is-4">
+        <%= @game.name %>
+      </p> 
+      <p>
+        <%= @game.description %>
+      </p>
+      <p>
+        <%@game.Genres.each do |genre|%>
+            <%= genre.name %> |
+        <%end%>
+      </p>
+      <p>
+        <%@game.Platforms.each do |platform|%>
+            <%= platform.name %> |
+        <%end%>
+      </p>
+    </div>        
+  </div>
+</div>  
 <div>
   <%= link_to "Edit this game", edit_game_path(@game) %> |
   <%= link_to "Back to games", games_path %>

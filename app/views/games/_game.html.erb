@@ -1,20 +1,20 @@
 <div class="column">
     <div class="card">
         <div class="card-content">
-                <p class="card-header-title is-centered">
+                <p class="subtitle is-6 is-centered">
                     <%= link_to game.name, game %>
                 </p>        
             <% if game.image.present? %>
-                <div class="card-image is-centered">
+                <div class="card-image has-text-centered">
                     <%= image_tag(game.image, :size => '200x200')%>
                 </div>
             <% end %>        
-            <footer class="card-footer">
+            <footer class="card-footer is-centered">
                 <% if game.age_rating.present? %>
-                    <%= game.age_rating %>
+                    <p class="card-footer-item"><%= game.age_rating %></p>                     
                 <% end %> 
                 <br>
-                $<%= game.price %>
+                <p class="card-footer-item"><%= number_to_currency(game.price) %></p>                
             </footer>
         </div>
     </div>
