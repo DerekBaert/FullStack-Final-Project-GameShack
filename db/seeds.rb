@@ -41,3 +41,4 @@ for i in 0..49
         GamePlatform.find_or_create_by(Game_id: game.id, Platform_id: platform.id)
     end
 end
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
