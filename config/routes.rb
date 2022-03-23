@@ -6,8 +6,10 @@ Rails.application.routes.draw do
   resources :users
   resources :genres
   resources :platforms
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  get    'login'   => 'sessions#new'
+  post   'login'   => 'sessions#create'
+  delete 'logout'  => 'sessions#destroy'
+  get    'signup'  => 'users#new'
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 end
