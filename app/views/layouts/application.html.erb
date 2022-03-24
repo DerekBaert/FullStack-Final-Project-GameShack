@@ -15,6 +15,9 @@
     <nav class="navbar is-danger" aria-label="main navigation">
       <div class="navbar-menu">
         <div class="navbar-start">
+          <a class="navbar-item" href=<%=home_path%>>
+            Home
+          </a>
           <a class="navbar-item" href=<%=games_path%>>
             Games
           </a>
@@ -24,14 +27,24 @@
         </div>
         <div class="navbar-end">
           <div class="navbar-item">
-            <div class="buttons">
+            <a class="navbar-item" href=<%=admin_root_path%>>
+              Admin
+            </a>
+            <%if session[:current_user_id].nil?%>
               <a class="navbar-item" href=<%=signup_path%>>
-              Sign up
+                Sign up
               </a>
               <a class="navbar-item" href=<%=login_path%>>
-              Log in
+                Log in
+              </a>              
+            <%else%>
+              <a class="navbar-item" href=<%=account_path%>>
+                Account
               </a>
-            </div>
+              <a class="navbar-item" href=<%=logout_path%>>
+                Log out
+              </a>
+            <%end%>
           </div>
         </div>
       </div>

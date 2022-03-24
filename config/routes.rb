@@ -6,10 +6,18 @@ Rails.application.routes.draw do
   resources :users
   resources :genres
   resources :platforms
+
+  root to: 'home#index'
+
   get    'login'   => 'sessions#new'
-  post   'login'   => 'sessions#create'
-  delete 'logout'  => 'sessions#destroy'
+  get    'logout'  => 'sessions#destroy'
   get    'signup'  => 'users#new'
+  get    'account' => 'users#show'
+  get    'home'    => 'home#index'
+
+  post   'login'   => 'sessions#create' 
+  delete 'logout'  => 'sessions#destroy'
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 end

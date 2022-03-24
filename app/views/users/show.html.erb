@@ -1,3 +1,9 @@
 <p style="color: green"><%= notice %></p>
 
 <%= render @user %>
+
+<div>
+  <%if @user.id == session[:current_user_id]%>
+    <%= link_to "Edit account", edit_user_path(@user) %>
+  <%end%>
+</div>
