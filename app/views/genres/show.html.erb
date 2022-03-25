@@ -1,10 +1,29 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @genre %>
-
-<div>
-  <%= link_to "Edit this genre", edit_genre_path(@genre) %> |
-  <%= link_to "Back to genres", genres_path %>
-
-  <%= button_to "Destroy this genre", @genre, method: :delete %>
+<h1 class="title is-2"><%=@genre.name%></h1>
+<p class="title is-5 has-text-centered">Games in this Genre:</p>
+<div class="columns">    
+      <%@genre.Games.each do |game|%>
+        <div class="column">
+          <div class="card">
+              <div class="card-content">
+                      <p class="subtitle is-6 is-centered">
+                          <%= link_to game.name, game %>
+                      </p>        
+                  <% if game.image.present? %>
+                      <div class="card-image has-text-centered">
+                          <%= image_tag(game.image, width: '200')%>
+                      </div>
+                  <% end %>        
+                  <footer class="card-footer is-centered">
+                      <% if game.age_rating.present? %>
+                          <p class="card-footer-item"><%= game.age_rating %></p>                     
+                      <% end %> 
+                      <br>
+                      <p class="card-footer-item"><%= number_to_currency(game.price) %></p>                
+                  </footer>
+              </div>
+          </div>
+        </div>
+      <%end%>
 </div>

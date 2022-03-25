@@ -23,9 +23,17 @@
           </a>
           <a class="navbar-item" href=<%=platforms_path%>>
             Platforms
+          </a>    
+          <a class="navbar-item" href=<%=genres_path%>>
+            Genres
           </a>     
         </div>
         <div class="navbar-end">
+          <div class="navbar-item">
+          <%= form_with(url: '/games', method: 'get', local: true) do %>
+            <%= text_field_tag(:search) %>
+            <%= submit_tag("Search") %>
+          <% end %>
           <div class="navbar-item">
             <a class="navbar-item" href=<%=admin_root_path%>>
               Admin

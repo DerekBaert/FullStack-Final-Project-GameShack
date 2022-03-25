@@ -1,7 +1,9 @@
-<div id="<%= dom_id genre %>">
-  <p>
-    <strong>Name:</strong>
-    <%= genre.name %>
-  </p>
-
+<div class="column">
+    <div class="card">
+        <div class="card-content">
+          <p class="subtitle is-6 is-centered">
+            <%= link_to genre.name, genre %>
+          </p>                
+        </div>
+    </div>
 </div>

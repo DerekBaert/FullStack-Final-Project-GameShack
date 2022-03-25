@@ -1,14 +1,12 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Genres</h1>
-
-<div id="genres">
-  <% @genres.each do |genre| %>
-    <%= render genre %>
-    <p>
-      <%= link_to "Show this genre", genre %>
-    </p>
+<h1 class="title is-2">Genres</h1>
+<div class="columns">
+  <% @genres.each do |g| %>
+    <div class="card m-3 has-text-centered">
+      <%= link_to g.name.capitalize(), g %>
+    </div>    
   <% end %>
 </div>
 
-<%= link_to "New genre", new_genre_path %>
+<%= paginate @genres %>
