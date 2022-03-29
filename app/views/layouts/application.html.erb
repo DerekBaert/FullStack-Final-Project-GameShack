@@ -32,6 +32,7 @@
           <div class="navbar-item">
           <%= form_with(url: '/games', method: 'get', local: true) do %>
             <%= text_field_tag(:search) %>
+            <%= select_tag 'platform', options_for_select(Platform.all.map{|el| [el.name, el.id]}) %>
             <%= submit_tag("Search") %>
           <% end %>
           <div class="navbar-item">

@@ -1,0 +1,1 @@
+GiantBomb::Api.key('2d85f2dfc0c87ca82eba3b139d9b58d59079e080')

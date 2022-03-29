@@ -7,6 +7,39 @@
 #   Character.create(name: "Luke", movie: movies.first)
 require 'faker'
 require 'uri'
+require 'open-uri'
+require "json"
+
+key = '2d85f2dfc0c87ca82eba3b139d9b58d59079e080'
+def fetch(url)
+    JSON.parse(URI.open(url).read)
+end
+
+# Switch - 157
+# PS5 - 176
+# Xbox Series S/X - 179
+# Xbox One - 145
+# PS4 - 146
+# platforms = [157, 176, 179, 145, 146]
+# platforms.each do |p|
+#     platform = fetch("https://www.giantbomb.com/api/platform/#{p}/?api_key=#{key}&format=json")['results']
+#     platform_name =  platform['name']
+#     platform_description = platform['deck']
+#     platform_price = platform['original_price']
+#     image = URI.open(platform['image']['medium_url'])
+#     #  platform.image.attach(io: image, filename:"#{platform.name}.jpg")
+
+#     game_results = fetch("https://www.giantbomb.com/api/games/?api_key=#{key}&limit=25&format=json&platforms=#{p}&filter=original_release_date:#{DateTime.now - 1825}|#{DateTime.now}")['results']
+#     game_reults.each do |game|
+#         game_name = game['name']
+#         game_description = game['deck']
+#     end
+# end
+    
+# GiantBomb::Search.new().query(Faker::Game.title).resources('game').fetch.each do |game|
+#     puts game["name"]
+# end
+
 GameGenre.delete_all
 GamePlatform.delete_all
 Game.delete_all

@@ -10,6 +10,8 @@ class Game < ApplicationRecord
 
     has_one_attached :image
 
+    validates :name, :price, :description, :age_rating, presence: true
+    validates :price, numericality: true
     def self.search(search)
         if search 
             where(["name LIKE ?","%#{search}%"])

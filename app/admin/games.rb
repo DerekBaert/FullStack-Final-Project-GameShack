@@ -5,7 +5,7 @@ ActiveAdmin.register Game do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
- permit_params :name, :description, :price, :age_rating
+ permit_params :name, :description, :price, :age_rating, :image
   #
   # or
   #
@@ -15,7 +15,7 @@ ActiveAdmin.register Game do
   #   permitted
   # end
   form do |f|
-    f.object.added_date = DateTime.now unless f.object.persisted?
+    #f.object.added_date = DateTime.now unless f.object.persisted?
     f.inputs
     f.inputs do
       f.input :image, as: :file,
