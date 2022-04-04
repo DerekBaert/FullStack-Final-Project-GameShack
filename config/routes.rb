@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get    'signup'  => 'users#new'
   get    'account' => 'users#show'
   get    'home'    => 'home#index'
+  get    'search'  => 'search#index'
 
   post   'login'   => 'sessions#create' 
   delete 'logout'  => 'sessions#destroy'

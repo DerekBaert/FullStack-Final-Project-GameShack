@@ -30,9 +30,14 @@
         </div>
         <div class="navbar-end">
           <div class="navbar-item">
-          <%= form_with(url: '/games', method: 'get', local: true) do %>
+          <%= form_with(url: '/search', method: 'get', local: true) do %>
             <%= text_field_tag(:search) %>
-            <%= select_tag 'platform', options_for_select(Platform.all.map{|el| [el.name, el.id]}) %>
+            <select name="platforms" id="platforms">
+                <option value="All">All Platforms</option>
+              <% Platform.all.each do |p|%>
+                <option value="<%=p.id%>"><%=p.name%></option>
+              <%end%>
+            </select>
             <%= submit_tag("Search") %>
           <% end %>
           <div class="navbar-item">

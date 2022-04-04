@@ -8,70 +8,80 @@
 require 'faker'
 require 'uri'
 require 'open-uri'
-require "json"
+require 'json'
+require 'net/https'
+require 'igdb_client'
+require 'apicalypse'
 
-key = '2d85f2dfc0c87ca82eba3b139d9b58d59079e080'
-def fetch(url)
-    JSON.parse(URI.open(url).read)
-end
+client_id = 'dnk3ybvozhyxj1fsck4crna182t1yy'
+access_token = 'pnjn9uifrk7x1glwr0e3w2xperoc5r'
 
-# Switch - 157
-# PS5 - 176
-# Xbox Series S/X - 179
-# Xbox One - 145
-# PS4 - 146
-# platforms = [157, 176, 179, 145, 146]
-# platforms.each do |p|
-#     platform = fetch("https://www.giantbomb.com/api/platform/#{p}/?api_key=#{key}&format=json")['results']
-#     platform_name =  platform['name']
-#     platform_description = platform['deck']
-#     platform_price = platform['original_price']
-#     image = URI.open(platform['image']['medium_url'])
-#     #  platform.image.attach(io: image, filename:"#{platform.name}.jpg")
+platforms_endpoint = 'https://api.igdb.com/v4/platforms'
+request_headers = { headers: { 'client-id' => client_id, 'authorization' => "Bearer #{access_token}", 'x-user-agent' => 'ruby-apicalypse' } }
 
-#     game_results = fetch("https://www.giantbomb.com/api/games/?api_key=#{key}&limit=25&format=json&platforms=#{p}&filter=original_release_date:#{DateTime.now - 1825}|#{DateTime.now}")['results']
-#     game_reults.each do |game|
-#         game_name = game['name']
-#         game_description = game['deck']
+platform_endpoint = Apicalypse.new(platforms_endpoint, request_headers)
+
+resp = platform_endpoint.fields(:name, :summary).where(id: 49).request
+
+puts resp.inspect
+
+# # Xbox One, Xbox Series S|X, PS4, PS5, Switch
+# platforms = [49, 169, 48, 167, 130]
+# client = IGDB::Client.new(client_id, access_token, 'platforms')
+# game_client = IGDB::Client.new(client_id, access_token, 'games')
+# platforms.each do |platform|    
+#     consoles = client.id platform
+#     puts consoles[0].name
+#     # platform = Platform.find_or_create_by(name: consoles[0].name)
+#     # if(!platform.price)
+#     #     platform.price = Faker::Commerce.price(range: 199.99..699.99).round(2)
+#     # end
+#     # if(!platform.description)
+#     #    platform.description = consoles[0].summary
+#     # end
+#     # image = URI.open("https://source.unsplash.com/600x600/?#{URI.escape(platform.name)}")
+#     # platform.image.attach(io: image, filename:"#{platform.name}.jpg")
+#     # platform.save
+#     # GamePlatform.find_or_create_by(Game_id: game.id, Platform_id: platform.id)
+
+#     games = game_client.get {where: "release_dates.platform = #{platform}", limit "10"}
+#     games.each do |game|
+#         puts game.name
 #     end
 # end
-    
-# GiantBomb::Search.new().query(Faker::Game.title).resources('game').fetch.each do |game|
-#     puts game["name"]
+
+# GameGenre.delete_all
+# GamePlatform.delete_all
+# Game.delete_all
+# Genre.delete_all
+# Platform.delete_all
+
+# ratings = ["Everyone", "Teen", "Mature"]
+# for i in 0..49    
+#     game = Game.find_or_create_by(name: Faker::Game.title)
+#     game.price = Faker::Commerce.price(range: 59.99..89.99)
+#     game.description = Faker::Lorem.paragraph(sentence_count: 2)
+#     game.age_rating = ratings.sample
+#     game.save
+#     image = URI.open("https://source.unsplash.com/600x600/?#{URI.escape(game.name)}")
+#     game.image.attach(io: image, filename:"#{game.name}.jpg")
+#     for j in 0..1
+#         genre = Genre.find_or_create_by(name: Faker::Game.genre)
+#         GameGenre.find_or_create_by(Game_id: game.id, Genre_id: genre.id) 
+#     end
+
+#     for j in 0..1
+#         platform = Platform.find_or_create_by(name: Faker::Game.platform)
+#         if(!platform.price)
+#             platform.price = Faker::Commerce.price(range: 199.99..699.99).round(2)
+#         end
+#         if(!platform.description)
+#             platform.description = Faker::Lorem.paragraph(sentence_count: 2)
+#         end
+#         image = URI.open("https://source.unsplash.com/600x600/?#{URI.escape(platform.name)}")
+#         platform.image.attach(io: image, filename:"#{platform.name}.jpg")
+#         platform.save
+#         GamePlatform.find_or_create_by(Game_id: game.id, Platform_id: platform.id)
+#     end
 # end
-
-GameGenre.delete_all
-GamePlatform.delete_all
-Game.delete_all
-Genre.delete_all
-Platform.delete_all
-
-ratings = ["Everyone", "Teen", "Mature"]
-for i in 0..49    
-    game = Game.find_or_create_by(name: Faker::Game.title)
-    game.price = Faker::Commerce.price(range: 59.99..89.99)
-    game.description = Faker::Lorem.paragraph(sentence_count: 2)
-    game.age_rating = ratings.sample
-    game.save
-    image = URI.open("https://source.unsplash.com/600x600/?#{URI.escape(game.name)}")
-    game.image.attach(io: image, filename:"#{game.name}.jpg")
-    for j in 0..1
-        genre = Genre.find_or_create_by(name: Faker::Game.genre)
-        GameGenre.find_or_create_by(Game_id: game.id, Genre_id: genre.id) 
-    end
-
-    for j in 0..1
-        platform = Platform.find_or_create_by(name: Faker::Game.platform)
-        if(!platform.price)
-            platform.price = Faker::Commerce.price(range: 199.99..699.99).round(2)
-        end
-        if(!platform.description)
-            platform.description = Faker::Lorem.paragraph(sentence_count: 2)
-        end
-        image = URI.open("https://source.unsplash.com/600x600/?#{URI.escape(platform.name)}")
-        platform.image.attach(io: image, filename:"#{platform.name}.jpg")
-        platform.save
-        GamePlatform.find_or_create_by(Game_id: game.id, Platform_id: platform.id)
-    end
-end
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+# AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

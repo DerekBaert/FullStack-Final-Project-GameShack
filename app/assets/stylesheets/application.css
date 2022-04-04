@@ -13,19 +13,12 @@
  *= require_tree .
  *= require_self
  */
- .card .card-image,
- .card .card-image .image img 
+ .card 
  {
-   height: 250px;
-   width: 250px;
- }
-
- #home
- {
-  margin: auto
+   width: 500px;
  }
 
  #home_games
  {
-   margin-right: 0%;
+   margin-left: 10%
  }
