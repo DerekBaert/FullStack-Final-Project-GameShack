@@ -1,6 +1,6 @@
 <p style="color: green"><%= notice %></p>
-<div class="card m-3">  
-  <div class="card-content has-text-centered">
+<div id="game_platform" class="card m-3 is-centered">  
+  <div class="card-content is-centered">
     <%= image_tag(@game.image, :size => '200x200')%> 
     <div class="media-content">
       <p class="title is-4">
@@ -9,6 +9,7 @@
       <p>
         <%= @game.description %>
       </p>
+
       <p>
         <%@game.Genres.each do |genre|%>
             <%= genre.name %> |

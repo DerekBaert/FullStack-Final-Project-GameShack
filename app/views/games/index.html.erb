@@ -1,6 +1,7 @@
 <p style="color: green"><%= notice %></p>
 
 <h1 class="title is-2">Games</h1>
+<%= paginate @games %>
 <div class="columns is-multiline">
   <% @games.each do |g| %>
     <%= render partial: "game", object: g %>    

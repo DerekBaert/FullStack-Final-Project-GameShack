@@ -1,54 +1,8 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
 require 'faker'
 require 'uri'
 require 'open-uri'
 require 'json'
 require 'net/https'
-require 'igdb_client'
-require 'apicalypse'
-
-client_id = 'dnk3ybvozhyxj1fsck4crna182t1yy'
-access_token = 'pnjn9uifrk7x1glwr0e3w2xperoc5r'
-
-platforms_endpoint = 'https://api.igdb.com/v4/platforms'
-request_headers = { headers: { 'client-id' => client_id, 'authorization' => "Bearer #{access_token}", 'x-user-agent' => 'ruby-apicalypse' } }
-
-platform_endpoint = Apicalypse.new(platforms_endpoint, request_headers)
-
-resp = platform_endpoint.fields(:name, :summary).where(id: 49).request
-
-puts resp.inspect
-
-# # Xbox One, Xbox Series S|X, PS4, PS5, Switch
-# platforms = [49, 169, 48, 167, 130]
-# client = IGDB::Client.new(client_id, access_token, 'platforms')
-# game_client = IGDB::Client.new(client_id, access_token, 'games')
-# platforms.each do |platform|    
-#     consoles = client.id platform
-#     puts consoles[0].name
-#     # platform = Platform.find_or_create_by(name: consoles[0].name)
-#     # if(!platform.price)
-#     #     platform.price = Faker::Commerce.price(range: 199.99..699.99).round(2)
-#     # end
-#     # if(!platform.description)
-#     #    platform.description = consoles[0].summary
-#     # end
-#     # image = URI.open("https://source.unsplash.com/600x600/?#{URI.escape(platform.name)}")
-#     # platform.image.attach(io: image, filename:"#{platform.name}.jpg")
-#     # platform.save
-#     # GamePlatform.find_or_create_by(Game_id: game.id, Platform_id: platform.id)
-
-#     games = game_client.get {where: "release_dates.platform = #{platform}", limit "10"}
-#     games.each do |game|
-#         puts game.name
-#     end
-# end
 
 # GameGenre.delete_all
 # GamePlatform.delete_all
@@ -56,32 +10,114 @@ puts resp.inspect
 # Genre.delete_all
 # Platform.delete_all
 
-# ratings = ["Everyone", "Teen", "Mature"]
-# for i in 0..49    
-#     game = Game.find_or_create_by(name: Faker::Game.title)
-#     game.price = Faker::Commerce.price(range: 59.99..89.99)
-#     game.description = Faker::Lorem.paragraph(sentence_count: 2)
-#     game.age_rating = ratings.sample
-#     game.save
-#     image = URI.open("https://source.unsplash.com/600x600/?#{URI.escape(game.name)}")
-#     game.image.attach(io: image, filename:"#{game.name}.jpg")
-#     for j in 0..1
-#         genre = Genre.find_or_create_by(name: Faker::Game.genre)
-#         GameGenre.find_or_create_by(Game_id: game.id, Genre_id: genre.id) 
-#     end
+# Variables for the IGDB api credentials
+client_id = 'dnk3ybvozhyxj1fsck4crna182t1yy'
+access_token = 'pnjn9uifrk7x1glwr0e3w2xperoc5r'
+def find_rating(rating)
+    case rating
+    when 8
+        game_rating = "E"
+    when 10
+        game_rating = "T"
+    when 11
+        game_rating = "M"
+    end 
+end
+# Function to take a list and present them as a comma separated list
+def comma_list(array, key)
+    list = nil
+    first = true
+    array.each do |item|
+        if(first)
+            list = item[key]
+            first = false
+        else
+            list = "#{list}, #{item[key]}"
+        end
+    end
+    return list
+end
 
-#     for j in 0..1
-#         platform = Platform.find_or_create_by(name: Faker::Game.platform)
-#         if(!platform.price)
-#             platform.price = Faker::Commerce.price(range: 199.99..699.99).round(2)
-#         end
-#         if(!platform.description)
-#             platform.description = Faker::Lorem.paragraph(sentence_count: 2)
-#         end
-#         image = URI.open("https://source.unsplash.com/600x600/?#{URI.escape(platform.name)}")
-#         platform.image.attach(io: image, filename:"#{platform.name}.jpg")
-#         platform.save
-#         GamePlatform.find_or_create_by(Game_id: game.id, Platform_id: platform.id)
-#     end
-# end
+# Xbox One, Xbox Series S|X, PS4, PS5, Switch
+platforms = [49, 169, 48, 167, 130]
+
+require 'net/https'
+http = Net::HTTP.new('api.igdb.com',443)
+http.use_ssl = true
+# Iterating through all platforms to grab information
+platforms.each do |p|    
+    platform_request = Net::HTTP::Post.new(URI('https://api.igdb.com/v4/platforms'), {'Client-ID' => client_id, 'Authorization' => "Bearer #{access_token}"})
+    platform_request.body = "fields name, summary, platform_logo.image_id; where id = #{p};"    
+    platform_results = JSON.parse(http.request(platform_request).body)
+
+    # Adding the Platform to the Database
+    platform = Platform.find_or_create_by(name: platform_results[0]['name'])
+    if(!platform.price)
+        platform.price = Faker::Commerce.price(range: 199.99..699.99).round(2)
+    end
+    if(!platform.description)
+        if(platform_results[0]['summary'])
+            platform.description = platform_results[0]['summary']
+        else
+            platform.description = "No description available"
+        end       
+    end
+    image = URI.open("https://images.igdb.com/igdb/image/upload/t_logo_med/#{platform_results[0]['platform_logo']['image_id']}.png")
+    platform.image.attach(io: image, filename:"#{platform.name}.jpg")
+    platform.save    
+
+    # Grabbing first 5 games from platform
+    game_request = Net::HTTP::Post.new(URI('https://api.igdb.com/v4/games'), {'Client-ID' => client_id, 'Authorization' => "Bearer #{access_token}"})
+    game_request.body = "fields name, age_ratings.rating, genres.name, platforms.name, cover.image_id, summary; where release_dates.platform = #{p}; limit 10; offset #{Game.all.count};"
+    game_results = JSON.parse(http.request(game_request).body)
+
+    # Looping through the games and adding them to the db
+    game_results.each do |g|
+        # Checking for the ESRB ratings only
+        game_rating = nil
+        # puts g['name']        
+        # puts g['age_ratings'].count()
+        if(g['age_ratings'])
+            if(g['age_ratings'][0].count == 1)
+                rating = g["age_ratings"]["rating"]
+                if(rating["rating"] == 8 || rating["rating"] == 10 || rating["rating"] == 11)
+                    find_rating(rating["rating"])                                       
+                end
+            else
+                rating = g['age_ratings'].each do |rating|
+                    if(rating["rating"] == 8 || rating["rating"] == 10 || rating["rating"] == 11)
+                        find_rating(rating["rating"])                    
+                    end
+                end
+            end 
+        end          
+        
+        # Adding game to db
+        game = Game.find_or_create_by(name: g['name'])
+        game.price = Faker::Commerce.price(range: 59.99..89.99)
+        if(g['summary'])
+            game.description = g['summary']
+        else
+            game.description = "No summary available"
+        end            
+        game.age_rating = game_rating
+        game.save
+        if(g['cover'])
+            image = URI.open("https://images.igdb.com/igdb/image/upload/t_cover_big/#{g['cover']['image_id']}.jpg")
+            game.image.attach(io: image, filename:"#{game.name}.jpg")
+        end            
+
+        # Adding genre and platform join
+        if(g['genres'])
+            g['genres'].each do |genre|
+                genre_name = genre['name']
+                genre = Genre.find_or_create_by(name: genre_name)
+                GameGenre.find_or_create_by(Game_id: game.id, Genre_id: genre.id)
+            end
+        end 
+
+        # Adding game and platform join
+        GamePlatform.find_or_create_by(Game_id: game.id, Platform_id: platform.id)
+    end
+end
 # AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

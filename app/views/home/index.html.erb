@@ -1,17 +1,10 @@
 <h1 class="title is-2">Home</h1>
 
-<div id="home" class="columns is-multiline is-centered">
-    <div id="home_games" class="column is-centered">
-        <h1 class="title is-3">Games</h1>
-        <% @games.each do |g| %>
+<h1 class="title is-3">Recently Added</h1>
+<div id="home" class="columns is-multiline">    
+    <% @games.each do |g| %>
+        <div id="home_games" class="column">
             <%= render partial: "games/game", object: g %>    
-        <% end %>.
-    </div>
-
-    <div id="home_platforms" class="column is-centered">
-        <h1 class="title is-2">Platforms</h1>
-        <% @platforms.each do |p| %>
-            <%= render partial: "platforms/platform", object: p %>
-        <% end %>
-    </div>
+        </div>
+    <% end %>
 </div>

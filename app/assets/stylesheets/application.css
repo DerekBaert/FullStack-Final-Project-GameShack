@@ -15,10 +15,22 @@
  */
  .card 
  {
-   width: 500px;
+   width: 200px;
  }
 
+ .column
+ {
+   width: 250px;
+   margin-right: 0px;
+ }
+
+ #game_platform
+ {
+   width: 500px;
+ }
+ 
  #home_games
  {
-   margin-left: 10%
+   margin-left: 5%;
+   width: 700px;
  }
