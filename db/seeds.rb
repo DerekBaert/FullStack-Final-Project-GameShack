@@ -22,6 +22,7 @@ def find_rating(rating)
     when 11
         game_rating = "M"
     end 
+    return game_rating
 end
 # Function to take a list and present them as a comma separated list
 def comma_list(array, key)
@@ -68,7 +69,7 @@ platforms.each do |p|
 
     # Grabbing first 5 games from platform
     game_request = Net::HTTP::Post.new(URI('https://api.igdb.com/v4/games'), {'Client-ID' => client_id, 'Authorization' => "Bearer #{access_token}"})
-    game_request.body = "fields name, age_ratings.rating, genres.name, platforms.name, cover.image_id, summary; where release_dates.platform = #{p}; limit 10; offset #{Game.all.count};"
+    game_request.body = "fields name, age_ratings.rating, genres.name, platforms.name, cover.image_id, summary; where release_dates.platform = #{p}; limit 20; offset #{platform.Games.count};"
     game_results = JSON.parse(http.request(game_request).body)
 
     # Looping through the games and adding them to the db
@@ -78,19 +79,12 @@ platforms.each do |p|
         # puts g['name']        
         # puts g['age_ratings'].count()
         if(g['age_ratings'])
-            if(g['age_ratings'][0].count == 1)
-                rating = g["age_ratings"]["rating"]
+            g['age_ratings'].each do |rating|
                 if(rating["rating"] == 8 || rating["rating"] == 10 || rating["rating"] == 11)
-                    find_rating(rating["rating"])                                       
+                    game_rating = find_rating(rating["rating"])                    
                 end
-            else
-                rating = g['age_ratings'].each do |rating|
-                    if(rating["rating"] == 8 || rating["rating"] == 10 || rating["rating"] == 11)
-                        find_rating(rating["rating"])                    
-                    end
-                end
-            end 
-        end          
+            end  
+        end              
         
         # Adding game to db
         game = Game.find_or_create_by(name: g['name'])
