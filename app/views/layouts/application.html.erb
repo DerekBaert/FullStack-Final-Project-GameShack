@@ -44,25 +44,27 @@
             <a class="navbar-item" href=<%=admin_root_path%>>
               Admin
             </a>
-            <%if session[:current_user_id].nil?%>
-              <a class="navbar-item" href=<%=signup_path%>>
-                Sign up
-              </a>
-              <a class="navbar-item" href=<%=login_path%>>
-                Log in
-              </a>              
-            <%else%>
-              <a class="navbar-item" href=<%=account_path%>>
+            <%if user_signed_in?%>
+              <a class="navbar-item" href=<%=edit_user_registration_path%>>
                 Account
               </a>
-              <a class="navbar-item" href=<%=logout_path%>>
-                Log out
+              <a class="navbar-item" href=<%=destroy_user_session_path%>>
+                Sign out
+              </a>       
+            <%else%>
+              <a class="navbar-item" href=<%=new_user_registration_path%>>
+                Sign up
               </a>
+              <a class="navbar-item" href=<%=new_user_session_path%>>
+                Sign in
+              </a> 
             <%end%>
           </div>
         </div>
       </div>
     </nav>
+    <p class = "notice"><%=notice%></p>
+    <p class = "alert"><%=alert%></p>
     <%= yield %>
   </body>
 </html>
