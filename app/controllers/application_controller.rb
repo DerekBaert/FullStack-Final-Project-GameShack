@@ -32,6 +32,8 @@ class ApplicationController < ActionController::Base
         session[:cart_platforms].delete(id)
         redirect_to request.referrer  
     end
+
+    
     private
 
     def initialize_session

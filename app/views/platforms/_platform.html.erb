@@ -2,7 +2,7 @@
     <div class="card has-text-centered">
         <% if platform.image.present? %>
             <div class="card-image has-text-centered">
-                <%= image_tag(platform.image, :size => '200x200')%>
+                <%= image_tag(platform.image, width: '200')%>
             </div>
         <% end %> 
         <div class="card-content">

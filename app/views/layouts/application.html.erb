@@ -42,38 +42,22 @@
         </div>
         <div class="navbar-end">          
           <div class="navbar-item">
-            <%=button_to "Admin", admin_root_path, class: "button is-danger"%>&nbsp
+            <%=button_to "Admin", admin_root_path, class: "button is-danger", method: :get%>&nbsp
             <%if user_signed_in?%>
-              <%=button_to "Account", edit_user_registration_path, class: "button is-primary"%>&nbsp
-              <%=button_to "Sign Out", destroy_user_session_path, class: "button is-danger"%>
+              <%=button_to "Account", edit_user_registration_path, class: "button is-primary", method: :get%>&nbsp
+              <%=button_to "Sign Out", destroy_user_session_path, class: "button is-danger", method: :get%>
             <%else%>
-              <%=button_to "Sign Up", new_user_registration_path, class: "button is-primary"%>&nbsp
-              <%=button_to "Sign In", new_user_session_path, class: "button is-primary"%>
+              <%=button_to "Sign Up", new_user_registration_path, class: "button is-primary", method: :get%>&nbsp
+              <%=button_to "Sign In", new_user_session_path, class: "button is-primary", method: :get%>
             <%end%>
-            
+            <p>&nbsp|&nbsp</p>
+            <%=link_to "Cart (#{@cart.count})", cart_path, class: "button is-primary", method: :get%>
           </div>
         </div>
       </div>
     </nav>
     <p class = "notice"><%=notice%></p>
     <p class = "alert"><%=alert%></p>
-    <details>
-      <summary>Cart</summary>
-      <%if @cart.empty?%>
-        <p>Cart is empty.</p>
-      <%else%>
-        <ul>
-          <%@cart.each do |product|%>
-            <li><%=product.name%></li>
-            <%if(product.is_a? Game)%>
-              <%=button_to "Remove",remove_game_from_cart_path(product.id), method: :delete, class: "button is-small is-danger"%>
-            <%else%>
-              <%=button_to "Remove",remove_platform_from_cart_path(product.id), method: :delete, class: "button is-small is-danger"%>
-            <%end%>
-          <%end%>
-        </ul>
-      <%end%>
-    </details>
     <%= yield %>
   </body>
 </html>
