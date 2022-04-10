@@ -19,15 +19,28 @@
                 <tr>
                     <td><%= image_tag(product.image, width: '100')%></td>
                     <td class="has-text-justified has-text-centered"><%= link_to product.name.truncate(50), product %></td>
-                    <td class="has-text-justified has-text-centered"><%=product.price%></td>
-                    <td class="has-text-justified has-text-centered">
-                        <input id=<%=product.id%>% class="quantity" type="number" name="quantity" min="1" max="10" value="1">
-                    </td>
-                    <td></td>
+                    <td class="has-text-justified has-text-centered"><%=product.price%></td>                    
                     <%if(product.is_a? Game)%>
-                        <td><%=button_to "Remove",remove_game_from_cart_path(product.id), method: :delete, class: "button is-small is-danger"%></td>
+                        <%= form_with(url: update_game_quantity_path(product.id.to_s), method: 'post', local: true) do %>
+                            <td class="has-text-justified has-text-centered">
+                                <input id="quantity" class="quantity" type="number" name="quantity" min="1" max="10" value=<%=session[:cart_games][product.id.to_s]%>>
+                                <%= button_tag "Update"%>
+                            </td>
+                        <%end%>
+                        <td><%=number_to_currency(product.price * session[:cart_games][product.id.to_s])%></td>
                     <%else%>
-                        <td><%=button_to "Remove",remove_platform_from_cart_path(product.id), method: :delete, class: "button is-small is-danger"%></td>
+                        <%= form_with(url: update_platform_quantity_path(product.id.to_s), method: 'post', local: true) do %>
+                            <td class="has-text-justified has-text-centered">
+                                <input id="quantity" class="quantity" type="number" name="quantity" min="1" max="10" value=<%=session[:cart_platforms][product.id.to_s]%>>
+                                <%= button_tag "Update"%>
+                            </td>
+                        <%end%>
+                        <td><%=number_to_currency(product.price * session[:cart_platforms][product.id.to_s])%></td>
+                    <%end%>                   
+                    <%if(product.is_a? Game)%>
+                        <td><%=button_to "Remove", remove_game_from_cart_path(product.id.to_s), method: :delete, class: "button is-small is-danger"%></td>
+                    <%else%>
+                        <td><%=button_to "Remove", remove_platform_from_cart_path(product.id.to_s), method: :delete, class: "button is-small is-danger"%></td>
                     <%end%>
                 </tr>
             <%end%>

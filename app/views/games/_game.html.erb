@@ -11,13 +11,9 @@
             </p>
             <footer class="card-footer is-centered">
                 <p class="card-footer-item"><%= number_to_currency(game.price) %></p>     
-                <%if(@cart.include?(game))%> 
-                    <p class="card-footer-item">In cart!</p>
-                <%else%>
-                    <div class="card-footer-item">  
-                        <%=button_to "Add to cart", add_game_to_cart_path(game.id), class: 'button is-primary'%>
-                    <div>
-                <%end%>        
+                <div class="card-footer-item">  
+                    <%=button_to "Add to cart", add_game_to_cart_path(game.id), class: 'button is-primary'%>
+                <div>       
             </footer>
         </div>
     </div>

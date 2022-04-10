@@ -51,13 +51,19 @@
               <%=button_to "Sign In", new_user_session_path, class: "button is-primary", method: :get%>
             <%end%>
             <p>&nbsp|&nbsp</p>
-            <%=link_to "Cart (#{@cart.count})", cart_path, class: "button is-primary", method: :get%>
+            <%if(@cart_count != 0)%>
+              <%=link_to "Cart (#{@cart_count})", cart_path, class: "button is-primary", method: :get%>
+            <%else%>
+              <%=link_to "Cart", cart_path, class: "button is-primary", method: :get%>
+            <%end%>
           </div>
         </div>
       </div>
     </nav>
     <p class = "notice"><%=notice%></p>
     <p class = "alert"><%=alert%></p>
+    <%=debug session[:cart_games]%>
+    <%=debug session[:cart_platforms]%>
     <%= yield %>
   </body>
 </html>

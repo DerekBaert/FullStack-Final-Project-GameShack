@@ -32,13 +32,9 @@
             </p>                     
         <% end %>  
       <footer class="card-footer has-text-centered"> 
-        <%if(@cart.include?(@game))%> 
-          <p class="card-footer-item">In cart!</p>
-        <%else%>
-          <div class="card-footer-item">  
-            <%=button_to "Add to cart", add_game_to_cart_path(@game.id), class: 'button is-primary'%>
-          <div>
-        <%end%>        
+        <div class="card-footer-item">  
+          <%=button_to "Add to cart", add_game_to_cart_path(@game.id), class: 'button is-primary'%>
+        <div>       
     </div>        
   </div>
 </div>  
