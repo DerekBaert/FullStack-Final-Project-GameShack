@@ -12,7 +12,7 @@
   </head>
 
   <body>
-    <nav class="navbar is-danger" aria-label="main navigation">
+    <nav class="navbar is-dark" aria-label="main navigation">
       <div class="navbar-menu">
         <div class="navbar-start">
           <a class="navbar-item" href=<%=home_path%>>
@@ -27,44 +27,53 @@
           <a class="navbar-item" href=<%=genres_path%>>
             Genres
           </a>     
+          <div class="navbar-item"> 
+            <%= form_with(url: '/search', method: 'get', local: true) do %>
+              <%= text_field_tag(:search) %>
+              <select name="platforms" id="platforms">
+                  <option value="All">All Platforms</option>
+                <% Platform.all.each do |p|%>
+                  <option value="<%=p.id%>"><%=p.name%></option>
+                <%end%>
+              </select>
+              <%= submit_tag("Search") %>
+            <% end %>
+          </div>
         </div>
-        <div class="navbar-end">
+        <div class="navbar-end">          
           <div class="navbar-item">
-          <%= form_with(url: '/search', method: 'get', local: true) do %>
-            <%= text_field_tag(:search) %>
-            <select name="platforms" id="platforms">
-                <option value="All">All Platforms</option>
-              <% Platform.all.each do |p|%>
-                <option value="<%=p.id%>"><%=p.name%></option>
-              <%end%>
-            </select>
-            <%= submit_tag("Search") %>
-          <% end %>
-          <div class="navbar-item">
-            <a class="navbar-item" href=<%=admin_root_path%>>
-              Admin
-            </a>
+            <%=button_to "Admin", admin_root_path, class: "button is-danger"%>&nbsp
             <%if user_signed_in?%>
-              <a class="navbar-item" href=<%=edit_user_registration_path%>>
-                Account
-              </a>
-              <a class="navbar-item" href=<%=destroy_user_session_path%>>
-                Sign out
-              </a>       
+              <%=button_to "Account", edit_user_registration_path, class: "button is-primary"%>&nbsp
+              <%=button_to "Sign Out", destroy_user_session_path, class: "button is-danger"%>
             <%else%>
-              <a class="navbar-item" href=<%=new_user_registration_path%>>
-                Sign up
-              </a>
-              <a class="navbar-item" href=<%=new_user_session_path%>>
-                Sign in
-              </a> 
+              <%=button_to "Sign Up", new_user_registration_path, class: "button is-primary"%>&nbsp
+              <%=button_to "Sign In", new_user_session_path, class: "button is-primary"%>
             <%end%>
+            
           </div>
         </div>
       </div>
     </nav>
     <p class = "notice"><%=notice%></p>
     <p class = "alert"><%=alert%></p>
+    <details>
+      <summary>Cart</summary>
+      <%if @cart.empty?%>
+        <p>Cart is empty.</p>
+      <%else%>
+        <ul>
+          <%@cart.each do |product|%>
+            <li><%=product.name%></li>
+            <%if(product.is_a? Game)%>
+              <%=button_to "Remove",remove_game_from_cart_path(product.id), method: :delete, class: "button is-small is-danger"%>
+            <%else%>
+              <%=button_to "Remove",remove_platform_from_cart_path(product.id), method: :delete, class: "button is-small is-danger"%>
+            <%end%>
+          <%end%>
+        </ul>
+      <%end%>
+    </details>
     <%= yield %>
   </body>
 </html>

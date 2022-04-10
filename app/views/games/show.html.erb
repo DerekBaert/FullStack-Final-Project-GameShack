@@ -1,7 +1,12 @@
 <p style="color: green"><%= notice %></p>
-<div id="game_platform" class="card m-3 is-centered">  
-  <div class="card-content is-centered">
-    <%= image_tag(@game.image, :size => '200x200')%> 
+
+<div id="game_platform" class="card">  
+  <% if @game.image.present? %>
+    <div class="card-image has-text-centered">
+      <%= image_tag(@game.image, width: '200')%>
+    </div>
+  <% end %>   
+  <div class="card-content">     
     <div class="media-content">
       <p class="title is-4">
         <%= @game.name %>
@@ -9,17 +14,31 @@
       <p>
         <%= @game.description %>
       </p>
-
-      <p>
+      <p class="card-footer-item">
+        <b>Genres:&nbsp </b>
         <%@game.Genres.each do |genre|%>
-            <%= genre.name %> |
+          <%= genre.name %> |
         <%end%>
       </p>
-      <p>
+      <p class="card-footer-item">
+        <b>Platforms:&nbsp </b>
         <%@game.Platforms.each do |platform|%>
-            <%= platform.name %> |
+          <%= platform.name %> |
         <%end%>
       </p>
+      <% if @game.age_rating.present? %>          
+            <p class="card-footer-item">
+              <b>ESRB Rating:&nbsp </b> <%= @game.age_rating %>
+            </p>                     
+        <% end %>  
+      <footer class="card-footer has-text-centered"> 
+        <%if(@cart.include?(@game))%> 
+          <p class="card-footer-item">In cart!</p>
+        <%else%>
+          <div class="card-footer-item">  
+            <%=button_to "Add to cart", add_game_to_cart_path(@game.id), class: 'button is-primary'%>
+          <div>
+        <%end%>        
     </div>        
   </div>
 </div>  

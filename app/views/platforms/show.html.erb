@@ -1,5 +1,5 @@
 <p style="color: green"><%= notice %></p>
-<div id="game_platform" class="card m-3 has-text-centered">  
+<div id="game_platform" class="card has-text-centered">  
   <div class="card-content has-text-centered">
     <%= image_tag(@platform.image, :size => '200x200')%> 
     <div class="media-content">
@@ -9,6 +9,16 @@
       <p>
         <%= @platform.description %>
       </p>
+      <footer class="card-footer is-centered">
+        <p class="card-footer-item"><%= number_to_currency(@platform.price) %></p>
+        <%if(@cart.include?(@platform))%> 
+          <p class="card-footer-item">In cart!</p>
+        <%else%>
+          <div class="card-footer-item">  
+            <%=button_to "Add to cart", add_platform_to_cart_path(@platform.id), class: 'button is-primary'%>
+          <div>
+        <%end%> 
+      </footer>
     </div>        
   </div>
 

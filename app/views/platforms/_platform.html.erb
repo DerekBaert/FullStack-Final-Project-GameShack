@@ -1,16 +1,23 @@
 <div class="column">
-    <div class="card">
+    <div class="card has-text-centered">
+        <% if platform.image.present? %>
+            <div class="card-image has-text-centered">
+                <%= image_tag(platform.image, :size => '200x200')%>
+            </div>
+        <% end %> 
         <div class="card-content">
-                <p class="subtitle is-6 is-centered">
-                    <%= link_to platform.name, platform %>
-                </p>        
-            <% if platform.image.present? %>
-                <div class="card-image has-text-centered">
-                    <%= image_tag(platform.image, :size => '200x200')%>
-                </div>
-            <% end %>        
+            <p class="subtitle is-6 is-centered">
+                <%= link_to platform.name, platform %>
+            </p>                           
             <footer class="card-footer is-centered">    
-              <p class="card-footer-item"><%= number_to_currency(platform.price) %></p>     
+                <p class="card-footer-item"><%= number_to_currency(platform.price) %></p>                             
+                <%if(@cart.include?(platform))%> 
+                    <p class="card-footer-item">In cart!</p>
+                <%else%>
+                    <div class="card-footer-item">  
+                        <%=button_to "Add to cart", add_platform_to_cart_path(platform.id), class: 'button is-primary'%>
+                    <div>
+                <%end%>   
             </footer>
         </div>
     </div>

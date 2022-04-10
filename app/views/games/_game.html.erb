@@ -1,20 +1,23 @@
 <div class="column">
-    <div class="card">
-        <div class="card-content">
-                <p class="subtitle is-6 is-centered">
-                    <%= link_to game.name, game %>
-                </p>        
-            <% if game.image.present? %>
-                <div class="card-image has-text-centered">
-                    <%= image_tag(game.image, width: '200')%>
-                </div>
-            <% end %>        
+    <div class="card has-text-centered">               
+        <% if game.image.present? %>
+            <div class="card-image has-text-centered">
+                <%= image_tag(game.image, width: '200')%>
+            </div>
+        <% end %>        
+        <div class="card-content">            
+            <p class="subtitle is-6 is-centered">
+                <%= link_to game.name.truncate(20), game %>
+            </p>
             <footer class="card-footer is-centered">
-                <% if game.age_rating.present? %>
-                    <p class="card-footer-item"><%= game.age_rating %></p>                     
-                <% end %> 
-                <br>
-                <p class="card-footer-item"><%= number_to_currency(game.price) %></p>                
+                <p class="card-footer-item"><%= number_to_currency(game.price) %></p>     
+                <%if(@cart.include?(game))%> 
+                    <p class="card-footer-item">In cart!</p>
+                <%else%>
+                    <div class="card-footer-item">  
+                        <%=button_to "Add to cart", add_game_to_cart_path(game.id), class: 'button is-primary'%>
+                    <div>
+                <%end%>        
             </footer>
         </div>
     </div>
