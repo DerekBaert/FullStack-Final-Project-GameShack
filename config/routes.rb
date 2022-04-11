@@ -19,9 +19,11 @@ Rails.application.routes.draw do
   get    'cart', to: 'home#cart', as: 'cart'
 
   post   'games/add_game_to_cart/:id', to: 'games#add_game_to_cart', as: 'add_game_to_cart'
+  post   'games/update_game_quantity/:id', to: 'games#update_game_quantity', as: 'update_game_quantity'
   delete 'games/remove_game_from_cart/:id', to: 'games#remove_game_from_cart', as: 'remove_game_from_cart'
 
   post   'platforms/add_platform_to_cart/:id', to: 'platforms#add_platform_to_cart', as: 'add_platform_to_cart'
+  post   'platforms/update_platform_quantity/:id', to: 'platforms#update_platform_quantity', as: 'update_platform_quantity'
   delete 'platforms/remove_platform_from_cart/:id', to: 'platforms#remove_platform_from_cart', as: 'remove_platform_from_cart'
 
   # post 'home/update_quantity/:id', to: 'home#update_quantity', as: 'update_quantity_path'
