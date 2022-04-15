@@ -14,9 +14,10 @@ Rails.application.routes.draw do
   # get    'logout'  => 'sessions#destroy'
   # get    'signup'  => 'users#new'
   # get    'account' => 'users#show'
-  get    'home'    => 'home#index'
-  get    'search'  => 'search#index'
-  get    'cart', to: 'home#cart', as: 'cart'
+  get   'home'    => 'home#index'
+  get   'search'  => 'search#index'
+  get   'cart', to: 'home#cart', as: 'cart'
+  get   'sale', to: 'home#sale', as: 'sale'
 
   post   'games/add_game_to_cart/:id', to: 'games#add_game_to_cart', as: 'add_game_to_cart'
   post   'games/update_game_quantity/:id', to: 'games#update_game_quantity', as: 'update_game_quantity'

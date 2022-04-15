@@ -6,4 +6,9 @@ class HomeController < ApplicationController
   
   def cart
   end
+
+  def sale
+    @games = Game.where.not(sale: nil)
+    @platforms = Platform.where.not(sale: nil)
+  end
 end
