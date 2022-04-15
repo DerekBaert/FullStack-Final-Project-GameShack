@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_10_161019) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_15_212358) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -99,6 +99,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_10_161019) do
     t.string "age_rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "sale"
   end
 
   create_table "genres", force: :cascade do |t|
@@ -113,6 +114,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_10_161019) do
     t.float "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "status_id", null: false
+    t.index ["status_id"], name: "index_orders_on_status_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -122,12 +125,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_10_161019) do
     t.float "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "sale"
   end
 
   create_table "provinces", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
+  end
+
+  create_table "statuses", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -155,6 +165,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_10_161019) do
   add_foreign_key "game_orders", "Orders"
   add_foreign_key "game_platforms", "Games"
   add_foreign_key "game_platforms", "Platforms"
+  add_foreign_key "orders", "statuses"
   add_foreign_key "orders", "users"
   add_foreign_key "users", "provinces"
 end
