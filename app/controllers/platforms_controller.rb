@@ -3,7 +3,14 @@ class PlatformsController < ApplicationController
 
   # GET /platforms or /platforms.json
   def index
-    @platforms = Platform.all.page(params[:page])
+    @filter = params[:filter]
+    if(params[:filter] == "All" || params[:filter].nil?)
+      @platforms = Platform.all.page(params[:page])
+    elsif(params[:filter] == "Sale")
+      @platforms = Platform.where.not(sale: nil).page(params[:page])
+    elsif(params[:filter] == "Recent")
+      @platforms = Platform.where(created_at: 3.days.ago..).page(params[:page])
+    end
   end
 
   # GET /platforms/1 or /platforms/1.json

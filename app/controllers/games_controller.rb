@@ -3,7 +3,16 @@ class GamesController < ApplicationController
   
   # GET /games or /games.json
   def index
-    @games = Game.search(params[:search]).page(params[:page])
+    if(params[:filter] == "All" || params[:filter].nil?)
+      @games = Game.search(params[:search]).page(params[:page])
+      @filter = params[:filter]
+    elsif(params[:filter] == "Sale")
+      @games = Game.where.not(sale: nil).page(params[:page])
+      @filter = params[:filter]
+    elsif(params[:filter] == "Recent")
+      @games = Game.where(created_at: 3.days.ago..).page(params[:page])
+      @filter = params[:filter]
+    end
   end
 
   # GET /games/1 or /games/1.json

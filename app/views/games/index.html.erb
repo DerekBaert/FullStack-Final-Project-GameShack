@@ -1,5 +1,13 @@
 <p style="color: green"><%= notice %></p>
 
+<%= form_with(url: '/games', method: 'get', local: true) do %>
+  <select name="filter" id="filter">
+    <option value="All">All</option>
+    <option value="Sale">On Sale</option>
+    <option value="Recent">Recently Added</option>
+  <%= submit_tag("Filter") %>
+<% end %>
+
 <h1 class="title is-2">Games</h1>
 <%= paginate @games %>
 
