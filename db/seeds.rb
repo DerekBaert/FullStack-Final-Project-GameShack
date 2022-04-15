@@ -11,12 +11,12 @@ require 'net/https'
 # Platform.delete_all
 
 
-provinces = ["Alberta", "British Colombia", "Manitoba", "New Brunswick", "Newfoundland and Labrador", "Nova Scotia", "Ontario", 
-    "Prince Edward Island", "Quebec", "Saskatchewan", "Northwest Territories", "Nunavut", "Yukon"]
+# provinces = ["Alberta", "British Colombia", "Manitoba", "New Brunswick", "Newfoundland and Labrador", "Nova Scotia", "Ontario", 
+#     "Prince Edward Island", "Quebec", "Saskatchewan", "Northwest Territories", "Nunavut", "Yukon"]
 
-    provinces.each do |province|
-        Province.find_or_create_by(name: province)
-    end
+#     provinces.each do |province|
+#         Province.find_or_create_by(name: province)
+#     end
 
 # Variables for the IGDB api credentials
 client_id = 'dnk3ybvozhyxj1fsck4crna182t1yy'
