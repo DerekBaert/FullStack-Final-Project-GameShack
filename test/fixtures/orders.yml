@@ -2,10 +2,12 @@
 
 one:
   number: 1
+  price: 1
+  status: one
   user: one
-  price: 1.5
 
 two:
   number: 1
+  price: 1
+  status: two
   user: two
-  price: 1.5

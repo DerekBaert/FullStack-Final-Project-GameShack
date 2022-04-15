@@ -47,15 +47,15 @@ def comma_list(array, key)
     return list
 end
 
-for i in 0..24
-    game = Game.order('RANDOM()').first
-    game.sale = [0.25, 0.50, 0.75].sample
-    game.save
-end
+# for i in 0..24
+#     game = Game.order('RANDOM()').first
+#     game.sale = [0.25, 0.50, 0.75].sample
+#     game.save
+# end
 
-Status.find_or_create_by(name: "New")
-Status.find_or_create_by(name: "Paid")
-Status.find_or_create_by(name: "Shipped")
+# Status.find_or_create_by(name: "New")
+# Status.find_or_create_by(name: "Paid")
+# Status.find_or_create_by(name: "Shipped")
 
 # Xbox One, Xbox Series S|X, PS4, PS5, Switch
 # platforms = [49, 169, 48, 167, 130]

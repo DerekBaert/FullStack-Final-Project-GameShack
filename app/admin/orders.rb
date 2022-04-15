@@ -5,12 +5,12 @@ ActiveAdmin.register Order do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :number, :user_id, :price, :status_id
+  permit_params :number, :price, :status_id, :user_id
   #
   # or
   #
   # permit_params do
-  #   permitted = [:number, :user_id, :price]
+  #   permitted = [:number, :price, :status_id, :user_id]
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
