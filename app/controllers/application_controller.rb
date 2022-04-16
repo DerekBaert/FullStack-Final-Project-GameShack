@@ -58,7 +58,7 @@ class ApplicationController < ActionController::Base
             end
         end
         @tax = @sub * @tax_rate
-        @total = @sub + @tax
+        @total = (@sub + @tax).round(2)
     end
 
     def remove_game_from_cart

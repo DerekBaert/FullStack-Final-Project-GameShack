@@ -88,7 +88,13 @@
                 <td></td>                
                 <td>Total</td>
                 <td><%=number_to_currency(@total)%></td>
-                <td><%=button_to "Checkout", checkout_create_path, method: :post, class: "button is-primary"%></td>
+                <td>
+                    <%if(user_signed_in?)%>
+                        <%=button_to "Checkout", checkout_create_path, method: :post, class: "button is-primary", params: {subtotal: @sub, tax: @tax, total: @total}%>
+                    <%else%>
+                        <%=button_to "Sign In to Checkout", new_user_session_path, class: "button is-primary", method: :get%>
+                    <%end%>
+                </td>
             </tr>
         </tbody>
     </table>
