@@ -19,11 +19,11 @@
                 <tr>
                     <td><%= image_tag(product.image, width: '100')%></td>
                     <td class="has-text-justified has-text-centered"><%= link_to product.name.truncate(50), product %></td>
-                    <td class="has-text-justified has-text-centered"><%=product.price%></td>                    
+                    <td class="has-text-justified has-text-centered"><%=product.price%></td>                   
                     <%if(product.is_a? Game)%>
-                        <%= form_with(url: update_game_quantity_path(product.id.to_s), method: 'post', local: true) do %>
-                            <td class="has-text-justified has-text-centered">
-                                <select name="qty"></select>
+                        <td class="has-text-justified has-text-centered">
+                            <%= form_with(url: update_game_quantity_path(product.id.to_s), method: :post, local: true) do %>                            
+                                <select name="quantity">
                                     <% for v in 1..10 do%>
                                         <%if v == session[:cart_games][product.id.to_s] %>
                                             <option value="<%=v%>" selected="selected"><%=v%></option>
@@ -33,16 +33,26 @@
                                     <%end%>
                                 </select>
                                 <input type="hidden" name="id" value="<%=product.id.to_s%>"/>
-                            </td>
-                        <%end%>
+                                <button class="button is-confirm" type="submit">Update</button>                            
+                            <%end%>
+                        </td>
                         <td><%=number_to_currency(product.price * session[:cart_games][product.id.to_s])%></td>
                     <%else%>
-                        <%= form_with(url: update_platform_quantity_path(product.id.to_s), method: 'post', local: true) do %>
-                            <td class="has-text-justified has-text-centered">
-                                <input id="quantity" class="quantity" type="number" name="quantity" min="1" max="10" value=<%=session[:cart_platforms][product.id.to_s]%>>
-                                <%= button_tag "Update", disabled: false%>
-                            </td>
-                        <%end%>
+                        <td class="has-text-justified has-text-centered">
+                            <%= form_with(url: update_platform_quantity_path(product.id.to_s), method: :post, local: true) do %>                            
+                                <select name="quantity">
+                                    <% for v in 1..10 do%>
+                                        <%if v == session[:cart_platforms][product.id.to_s] %>
+                                            <option value="<%=v%>" selected="selected"><%=v%></option>
+                                        <%else%>
+                                            <option value="<%=v%>"><%=v%></option>
+                                        <%end%>
+                                    <%end%>
+                                </select>
+                                <input type="hidden" name="id" value="<%=product.id.to_s%>"/>
+                                <button class="button is-confirm" type="submit">Update</button>                            
+                            <%end%>
+                        </td>
                         <td><%=number_to_currency(product.price * session[:cart_platforms][product.id.to_s])%></td>
                     <%end%>                   
                     <%if(product.is_a? Game)%>

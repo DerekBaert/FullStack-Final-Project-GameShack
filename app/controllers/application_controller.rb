@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
     include SessionsHelper
-    before_action :initialize_session, :load_cart
+    before_action :initialize_session, :load_cart, :calculate_total
     before_action :configure_permitted_parameters, if: :devise_controller?
 
     def add_game_to_cart
@@ -51,7 +51,11 @@ class ApplicationController < ActionController::Base
         end
 
         @cart.each do |p|
-            @sub += p.price
+            if(p.is_a? Game)
+                @sub += p.price * session[:cart_games][p.id.to_s]
+            else
+                @sub += p.price * session[:cart_platforms][p.id.to_s]
+            end
         end
         @tax = @sub * @tax_rate
         @total = @sub + @tax
@@ -59,25 +63,21 @@ class ApplicationController < ActionController::Base
 
     def remove_game_from_cart
         session[:cart_games].delete(params[:id])
-        load_cart()
         redirect_to cart_path  
     end
 
     def remove_platform_from_cart
         session[:cart_platforms].delete(params[:id])
-        load_cart()
         redirect_to cart_path 
     end
 
     def update_game_quantity
         session[:cart_games][params[:id]] = params[:quantity].to_i
-        load_cart()
-        redirect_to cart_path 
+        redirect_to cart_path
     end
 
     def update_platform_quantity
         session[:cart_platforms][params[:id]] = params[:quantity].to_i
-        load_cart()
         redirect_to cart_path
     end
     
