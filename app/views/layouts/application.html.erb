@@ -62,6 +62,11 @@
     </nav>
     <p class = "notice"><%=notice%></p>
     <p class = "alert"><%=alert%></p>
+    <%=debug @sub%>
+    <%=debug @tax%>
+    <%=debug @total%>
+    <%=debug session[:cart_games]%>
+    <%=debug session[:cart_platforms]%>
     <%= yield %>
   </body>
 </html>

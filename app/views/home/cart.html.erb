@@ -23,8 +23,16 @@
                     <%if(product.is_a? Game)%>
                         <%= form_with(url: update_game_quantity_path(product.id.to_s), method: 'post', local: true) do %>
                             <td class="has-text-justified has-text-centered">
-                                <input id="quantity" class="quantity" type="number" name="quantity" min="1" max="10" value=<%=session[:cart_games][product.id.to_s]%>>
-                                <%= button_tag "Update"%>
+                                <select name="qty"></select>
+                                    <% for v in 1..10 do%>
+                                        <%if v == session[:cart_games][product.id.to_s] %>
+                                            <option value="<%=v%>" selected="selected"><%=v%></option>
+                                        <%else%>
+                                            <option value="<%=v%>"><%=v%></option>
+                                        <%end%>
+                                    <%end%>
+                                </select>
+                                <input type="hidden" name="id" value="<%=product.id.to_s%>"/>
                             </td>
                         <%end%>
                         <td><%=number_to_currency(product.price * session[:cart_games][product.id.to_s])%></td>
@@ -32,7 +40,7 @@
                         <%= form_with(url: update_platform_quantity_path(product.id.to_s), method: 'post', local: true) do %>
                             <td class="has-text-justified has-text-centered">
                                 <input id="quantity" class="quantity" type="number" name="quantity" min="1" max="10" value=<%=session[:cart_platforms][product.id.to_s]%>>
-                                <%= button_tag "Update"%>
+                                <%= button_tag "Update", disabled: false%>
                             </td>
                         <%end%>
                         <td><%=number_to_currency(product.price * session[:cart_platforms][product.id.to_s])%></td>
@@ -44,6 +52,34 @@
                     <%end%>
                 </tr>
             <%end%>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>                
+                <td>Subtotal</td>
+                <td><%=number_to_currency(@sub)%></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>                
+                <td>Taxes</td>
+                <%if(@tax <= 0)%>
+                    <td>Calculated at Check Out</td>
+                <%else%>
+                    <td><%=number_to_currency(@tax)%></td>
+                <%end%>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>                
+                <td>Total</td>
+                <td><%=number_to_currency(@total)%></td>
+                <td><%=button_to "Checkout", remove_platform_from_cart_path(3), method: :post, class: "button is-primary"%></td>
+            </tr>
         </tbody>
     </table>
 <%end%>
