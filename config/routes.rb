@@ -35,5 +35,11 @@ Rails.application.routes.draw do
     get 'users/sign_out' => 'devise/sessions#destroy'
   end
 
+  scope '/checkout' do
+    post 'create', to: 'checkout#create', as: 'checkout_create'
+    get 'cancel', to: 'checkout#cancel', as: 'checkout_cancel'
+    get 'success', to: 'checkout#success', as: 'checkout_success'
+  end
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 end

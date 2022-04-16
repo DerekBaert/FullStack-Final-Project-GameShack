@@ -88,7 +88,7 @@
                 <td></td>                
                 <td>Total</td>
                 <td><%=number_to_currency(@total)%></td>
-                <td><%=button_to "Checkout", remove_platform_from_cart_path(3), method: :post, class: "button is-primary"%></td>
+                <td><%=button_to "Checkout", checkout_create_path, method: :post, class: "button is-primary"%></td>
             </tr>
         </tbody>
     </table>
