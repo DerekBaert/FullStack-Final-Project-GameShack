@@ -18,7 +18,7 @@
                     <td>
                         <% if item.game.image.present? %>
                             <div class="card-image has-text-centered">
-                                <%= image_tag(item.game.image, width: '100')%>
+                                <%= image_tag(item.game.image, width: '100', alt: item.game.name)%>
                             </div>
                         <% end %>  
                     </td>
@@ -28,7 +28,6 @@
                     <td><%=number_to_currency(item.price * item.quantity)%></td>
                 </tr>
             <%end%>
-            </div>
         <%end%>
         <%if @order.platform_orders%>            
             <%@order.platform_orders.each do |item|%>
@@ -36,15 +35,14 @@
                     <td>
                         <% if item.platform.image.present? %>
                             <div class="card-image has-text-centered">
-                                <%= image_tag(item.platform.image, width: '100')%>
+                                <%= image_tag(item.platform.image, width: '100', alt: item.platform.name)%>
                             </div>
                         <% end %>  
                         <td><%= link_to item.platform.name.truncate(50), item.platform %></td>  
                         <td><%=number_to_currency(item.price)%></td>    
                         <td><%=item.Quantity%></td>      
                         <td><%=number_to_currency(item.price * item.Quantity)%></td>
-                    </td>
-                    
+                    </td>                    
                 </tr>
             <%end%>            
         <%end%>

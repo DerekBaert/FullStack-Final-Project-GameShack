@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>GameShack</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <%= javascript_importmap_tags %>
@@ -42,15 +41,15 @@
         </div>
         <div class="navbar-end">          
           <div class="navbar-item">
-            <%=button_to "Admin", admin_root_path, class: "button is-danger", method: :get%>&nbsp
+            <%=button_to "Admin", admin_root_path, class: "button is-danger", method: :get%>&nbsp;
             <%if user_signed_in?%>
-              <%=button_to "Account", edit_user_registration_path, class: "button is-primary", method: :get%>&nbsp
+              <%=button_to "Account", edit_user_registration_path, class: "button is-primary", method: :get%>&nbsp;
               <%=button_to "Sign Out", destroy_user_session_path, class: "button is-danger", method: :get%>
             <%else%>
-              <%=button_to "Sign Up", new_user_registration_path, class: "button is-primary", method: :get%>&nbsp
+              <%=button_to "Sign Up", new_user_registration_path, class: "button is-primary", method: :get%>&nbsp;
               <%=button_to "Sign In", new_user_session_path, class: "button is-primary", method: :get%>
             <%end%>
-            <p>&nbsp|&nbsp</p>
+            <p>&nbsp;|&nbsp;</p>
             <%if(@cart_count != 0)%>
               <%=link_to "Cart (#{@cart_count})", cart_path, class: "button is-primary", method: :get%>
             <%else%>

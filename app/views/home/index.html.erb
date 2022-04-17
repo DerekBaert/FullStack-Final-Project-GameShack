@@ -1,9 +1,9 @@
 <h1 class="title is-2">Home</h1>
 
-<h1 class="title is-3">Recently Added</h1>
+<h2 class="title is-3">Recently Added</h2>
 <div id="home" class="columns is-multiline">    
     <% @games.each do |g| %>
-        <div id="home_games" class="column">
+        <div class="column">
             <%= render partial: "games/game", object: g %>    
         </div>
     <% end %>

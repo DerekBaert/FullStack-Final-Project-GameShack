@@ -17,7 +17,7 @@
         <tbody>
             <%@cart.each do |product|%>
                 <tr>
-                    <td><%= image_tag(product.image, width: '100')%></td>
+                    <td><%= image_tag(product.image, width: '100', alt: "#{product.name.truncate(10)}")%></td>
                     <td class="has-text-justified has-text-centered"><%= link_to product.name.truncate(50), product %></td>
                     <td class="has-text-justified has-text-centered">
                     <%if(product.sale)%>

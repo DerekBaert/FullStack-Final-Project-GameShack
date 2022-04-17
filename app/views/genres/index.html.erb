@@ -1,12 +1,12 @@
 <p style="color: green"><%= notice %></p>
 
 <h1 class="title is-2">Genres</h1>
-<div class="columns">
+<aside class="menu">
   <% @genres.each do |g| %>
-    <div class="card m-3 has-text-centered">
-      <%= link_to g.name.capitalize(), g %>
-    </div>    
+    <ul class="menu-list">
+      <li><%= link_to g.name.capitalize(), g %></li>
+    </ul>    
   <% end %>
-</div>
+</aside>
 
 <%= paginate @genres %>

@@ -29,31 +29,36 @@ class CheckoutController < ApplicationController
             end
         end
         
-        redirect_to order_path(order.id)
-        
-        description = ""
+        session[:cart_games] = nil
+        session[:cart_platforms] = nil
+        @cart_count = 0
+        @cart = nil
 
-        @cart.each do |p|
-            description += "#{p.name}\n"
-        end
+        redirect_to order_path(order)
+        
+        # description = ""
+
+        # @cart.each do |p|
+        #     description += "#{p.name}\n"
+        # end
 
         # Setting up Stripe for payment
-        @session = Stripe::Checkout::Session.create(
-            payment_method_types: ['card'],
-            line_items: [{
-                        name: "GameShack Order",
-                        description: description,
-                        amount: (@total * 100).to_i,
-                        currency: 'cad',
-                        quantity: @cart_count
-            }],
-            success_url: checkout_success_url,
-            cancel_url: checkout_cancel_url
-        )
+        # @session = Stripe::Checkout::Session.create(
+        #     payment_method_types: ['card'],
+        #     line_items: [{
+        #                 name: "GameShack Order",
+        #                 description: description,
+        #                 amount: (@total * 100).to_i,
+        #                 currency: 'cad',
+        #                 quantity: @cart_count
+        #     }],
+        #     success_url: checkout_success_url,
+        #     cancel_url: checkout_cancel_url
+        # )
 
-        respond_to do |format|
-            format.js # render a create.js.erb
-        end        
+        # respond_to do |format|
+        #     format.js # render a create.js.erb
+        # end        
     end
 
     def success
