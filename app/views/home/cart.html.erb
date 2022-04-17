@@ -19,7 +19,13 @@
                 <tr>
                     <td><%= image_tag(product.image, width: '100')%></td>
                     <td class="has-text-justified has-text-centered"><%= link_to product.name.truncate(50), product %></td>
-                    <td class="has-text-justified has-text-centered"><%=product.price%></td>                   
+                    <td class="has-text-justified has-text-centered">
+                    <%if(product.sale)%>
+                            <%=number_to_currency((product.price - (product.price * product.sale)))%>
+                        <%else%>
+                            <%=number_to_currency(product.price)%>
+                        <%end%>
+                    </td>                   
                     <%if(product.is_a? Game)%>
                         <td class="has-text-justified has-text-centered">
                             <%= form_with(url: update_game_quantity_path(product.id.to_s), method: :post, local: true) do %>                            
@@ -36,7 +42,11 @@
                                 <button class="button is-confirm" type="submit">Update</button>                            
                             <%end%>
                         </td>
-                        <td><%=number_to_currency(product.price * session[:cart_games][product.id.to_s])%></td>
+                        <%if(product.sale)%>
+                            <td><%=number_to_currency((product.price - (product.price * product.sale))* session[:cart_games][product.id.to_s])%></td>
+                        <%else%>
+                            <td><%=number_to_currency(product.price * session[:cart_games][product.id.to_s])%></td>
+                        <%end%>
                     <%else%>
                         <td class="has-text-justified has-text-centered">
                             <%= form_with(url: update_platform_quantity_path(product.id.to_s), method: :post, local: true) do %>                            

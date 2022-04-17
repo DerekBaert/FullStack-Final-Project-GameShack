@@ -16,9 +16,10 @@ Rails.application.routes.draw do
   # get    'account' => 'users#show'
   get   'home'    => 'home#index'
   get   'search'  => 'search#index'
-  get   'cart', to: 'home#cart', as: 'cart'
+  get   'cart',   to: 'home#cart',   as: 'cart'
+  # get   'orders', to: 'order#index', as: 'orders'
 
-  post   'games/add_game_to_cart/:id', to: 'games#add_game_to_cart', as: 'add_game_to_cart'
+  post   'games/add_game_to_cart/:id',  to: 'games#add_game_to_cart', as: 'add_game_to_cart'
   post   'games/update_game_quantity/:id', to: 'games#update_game_quantity', as: 'update_game_quantity'
   delete 'games/remove_game_from_cart/:id', to: 'games#remove_game_from_cart', as: 'remove_game_from_cart'
 

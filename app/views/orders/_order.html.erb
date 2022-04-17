@@ -1,22 +1,29 @@
-<div id="<%= dom_id order %>">
-  <p>
-    <strong>Number:</strong>
-    <%= order.number %>
-  </p>
+<div id="<%= dom_id order %>" class="card">
+  <div class="card-content">
+    <p>
+      <strong>Order #:</strong>
+      <%= link_to order.number, order %>
+    </p>
 
-  <p>
-    <strong>Price:</strong>
-    <%= order.price %>
-  </p>
+    <p>
+      <strong>Placed:</strong>
+      <%= order.created_at.strftime("%m/%d/%Y") %>
+    </p>
 
-  <p>
-    <strong>Status:</strong>
-    <%= order.status_id %>
-  </p>
+    <p>
+      <strong>Order Status:</strong>
+      <%= order.status.name %>
+    </p>
 
-  <p>
-    <strong>User:</strong>
-    <%= order.user_id %>
-  </p>
+    <p>
+      <strong>Taxes:</strong>
+      <%= number_to_currency(order.tax) %>
+    </p>
 
+    <p>
+      <strong>Total:</strong>
+      <%= number_to_currency(order.price) %>
+    </p>
+  </div>
 </div>
+

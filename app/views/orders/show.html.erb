@@ -2,9 +2,51 @@
 
 <%= render @order %>
 
-<div>
-  <%= link_to "Edit this order", edit_order_path(@order) %> |
-  <%= link_to "Back to orders", orders_path %>
-
-  <%= button_to "Destroy this order", @order, method: :delete %>
-</div>
+<table class="table is-fullwidth is-bordered text-is-centered">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <%if @order.game_orders%>            
+            <%@order.game_orders.each do |item|%>
+                <tr>
+                    <td>
+                        <% if item.game.image.present? %>
+                            <div class="card-image has-text-centered">
+                                <%= image_tag(item.game.image, width: '100')%>
+                            </div>
+                        <% end %>  
+                    </td>
+                    <td><%= link_to item.game.name.truncate(50), item.game %></td>  
+                    <td><%=number_to_currency(item.price)%></td>    
+                    <td><%=item.quantity%></td>      
+                    <td><%=number_to_currency(item.price * item.quantity)%></td>
+                </tr>
+            <%end%>
+            </div>
+        <%end%>
+        <%if @order.platform_orders%>            
+            <%@order.platform_orders.each do |item|%>
+                <tr>
+                    <td>
+                        <% if item.platform.image.present? %>
+                            <div class="card-image has-text-centered">
+                                <%= image_tag(item.platform.image, width: '100')%>
+                            </div>
+                        <% end %>  
+                        <td><%= link_to item.platform.name.truncate(50), item.platform %></td>  
+                        <td><%=number_to_currency(item.price)%></td>    
+                        <td><%=item.Quantity%></td>      
+                        <td><%=number_to_currency(item.price * item.Quantity)%></td>
+                    </td>
+                    
+                </tr>
+            <%end%>            
+        <%end%>
+</table>
+<%= button_to "Back to orders", orders_path,  class: "button is-primary", method: :get%>

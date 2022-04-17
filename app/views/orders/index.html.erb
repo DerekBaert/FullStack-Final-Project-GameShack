@@ -1,14 +1,13 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Orders</h1>
+<h1 class="title is-2">Orders</h1>
 
-<div id="orders">
+<%= paginate @orders %>
+
+<div class="columns is-multiline">
   <% @orders.each do |order| %>
     <%= render order %>
-    <p>
-      <%= link_to "Show this order", order %>
-    </p>
   <% end %>
 </div>
-
-<%= link_to "New order", new_order_path %>
+<%=button_to "Back", edit_user_registration_path, class: "button is-primary", method: :get%>
+<%= paginate @orders %>

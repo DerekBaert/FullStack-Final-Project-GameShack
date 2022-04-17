@@ -9,10 +9,10 @@
             <p class="title is-5 is-centered">
                 <%= link_to game.name.truncate(15), game %>
             </p>
-            <%if(game.sale)%>
+                <%if(game.sale)%>
                     <p class="subtitle is-6 is-centered" >
                     <s style="color:red;"><%= number_to_currency(game.price)%></s> | 
-                    <span style="color:green;"><%=number_to_currency(game.price * game.sale)%></span>      
+                    <span style="color:green;"><%=number_to_currency(game.price - (game.price * game.sale))%></span>      
                     </p>              
                 <%else%>
                     <p class="subtitle is-6 is-centered" style="color:green;"><%= number_to_currency(game.price) %></p>     

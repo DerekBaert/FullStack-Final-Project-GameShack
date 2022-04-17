@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_16_031358) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_16_235605) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -75,12 +75,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_16_031358) do
   end
 
   create_table "game_orders", force: :cascade do |t|
-    t.integer "game_id_id", null: false
-    t.integer "order_id_id", null: false
+    t.integer "game_id", null: false
+    t.integer "order_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["game_id_id"], name: "index_game_orders_on_game_id_id"
-    t.index ["order_id_id"], name: "index_game_orders_on_order_id_id"
+    t.integer "quantity"
+    t.float "price"
+    t.index ["game_id"], name: "index_game_orders_on_game_id"
+    t.index ["order_id"], name: "index_game_orders_on_order_id"
   end
 
   create_table "game_platforms", force: :cascade do |t|
@@ -110,22 +112,25 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_16_031358) do
 
   create_table "orders", force: :cascade do |t|
     t.integer "number"
-    t.integer "price"
+    t.float "price"
     t.integer "status_id", null: false
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "tax"
     t.index ["status_id"], name: "index_orders_on_status_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "platform_orders", force: :cascade do |t|
-    t.integer "platform_id_id", null: false
-    t.integer "order_id_id", null: false
+    t.integer "platform_id", null: false
+    t.integer "Order_id", null: false
+    t.integer "Quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["order_id_id"], name: "index_platform_orders_on_order_id_id"
-    t.index ["platform_id_id"], name: "index_platform_orders_on_platform_id_id"
+    t.float "price"
+    t.index ["Order_id"], name: "index_platform_orders_on_Order_id"
+    t.index ["platform_id"], name: "index_platform_orders_on_platform_id"
   end
 
   create_table "platforms", force: :cascade do |t|
@@ -173,13 +178,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_16_031358) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "game_genres", "Games"
   add_foreign_key "game_genres", "Genres"
-  add_foreign_key "game_orders", "game_ids"
-  add_foreign_key "game_orders", "order_ids"
+  add_foreign_key "game_orders", "games"
+  add_foreign_key "game_orders", "orders"
   add_foreign_key "game_platforms", "Games"
   add_foreign_key "game_platforms", "Platforms"
   add_foreign_key "orders", "statuses"
   add_foreign_key "orders", "users"
-  add_foreign_key "platform_orders", "order_ids"
-  add_foreign_key "platform_orders", "platform_ids"
+  add_foreign_key "platform_orders", "Orders"
+  add_foreign_key "platform_orders", "platforms"
   add_foreign_key "users", "provinces"
 end

@@ -51,10 +51,14 @@ class ApplicationController < ActionController::Base
         end
 
         @cart.each do |p|
+            discount = 0
+            if(!p.sale.nil?)
+                discount = p.sale * p.price
+            end
             if(p.is_a? Game)
-                @sub += p.price * session[:cart_games][p.id.to_s]
+                @sub += (p.price - discount) * session[:cart_games][p.id.to_s]
             else
-                @sub += p.price * session[:cart_platforms][p.id.to_s]
+                @sub += (p.price - discount) * session[:cart_platforms][p.id.to_s]
             end
         end
         @tax = @sub * @tax_rate

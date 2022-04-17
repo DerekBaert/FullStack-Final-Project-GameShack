@@ -9,8 +9,15 @@
             <p class="subtitle is-6 is-centered">
                 <%= link_to platform.name, platform %>
             </p>                           
-            <footer class="card-footer is-centered">    
-                <p class="card-footer-item"><%= number_to_currency(platform.price) %></p>                             
+            <%if(platform.sale)%>
+                    <p class="subtitle is-6 is-centered" >
+                    <s style="color:red;"><%= number_to_currency(platform.price)%></s> | 
+                    <span style="color:green;"><%=number_to_currency(platform.price - (platform.price * platform.sale))%></span>      
+                    </p>              
+                <%else%>
+                    <p class="subtitle is-6 is-centered" style="color:green;"><%= number_to_currency(platform.price) %></p>     
+                <%end%>
+            <footer class="card-footer is-centered">                                
                 <div class="card-footer-item">  
                     <%=button_to "Add to cart", add_platform_to_cart_path(platform.id), class: 'button is-primary'%>
                 <div>   

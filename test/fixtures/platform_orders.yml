@@ -1,9 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  game: one
-  order: one
+  platform: one
+  Order: one
+  Quantity: 1
 
 two:
-  game: two
-  order: two
+  platform: two
+  Order: two
+  Quantity: 1
