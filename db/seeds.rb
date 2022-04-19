@@ -47,15 +47,10 @@ def comma_list(array, key)
     return list
 end
 
-for i in 0..24
-    game = Game.order('RANDOM()').first
-    game.sale = [0.25, 0.50, 0.75].sample
-    game.save
-end
-
 # Status.find_or_create_by(name: "New")
 # Status.find_or_create_by(name: "Paid")
 # Status.find_or_create_by(name: "Shipped")
+Status.find_or_create_by(name: "Cancelled")
 
 # Xbox One, Xbox Series S|X, PS4, PS5, Switch
 platforms = [49, 169, 48, 167, 130]
@@ -131,5 +126,11 @@ platforms.each do |p|
         # Adding game and platform join
         GamePlatform.find_or_create_by(Game_id: game.id, Platform_id: platform.id)
     end
+end
+
+for i in 0..24
+    game = Game.order('RANDOM()').first
+    game.sale = [0.25, 0.50, 0.75].sample
+    game.save
 end
 # AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

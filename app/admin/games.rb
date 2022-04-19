@@ -5,7 +5,7 @@ ActiveAdmin.register Game do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
- permit_params :name, :description, :price, :age_rating, :image, :sale, game_genres: [:id, :Game_id, :Genre_id, :_destroy], game_platforms: [:id, :Game_id, :Platform_id, :_destroy]
+ permit_params :name, :description, :price, :age_rating, :image, :sale, :game_genres_attributes, :game_platforms_attributes, game_genres: [:id, :Game_id, :Genre_id, :_destroy], game_platforms: [:id, :Game_id, :Platform_id, :_destroy]
   #
   # or
   #
