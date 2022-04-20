@@ -3,7 +3,7 @@ class Platform < ApplicationRecord
     has_many :games, through: :game_platforms
 
     has_many :platform_orders, dependent: :delete_all
-    has_many :orders, through: :platform_orders
+    has_many :Orders, through: :platform_orders
 
     has_one_attached :image
 

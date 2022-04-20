@@ -5,17 +5,17 @@ ActiveAdmin.register Platform do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :name, :description, :price, :image, :sale
+  permit_params :name, :description, :price, :sale, :image
   #
   # or
   #
   # permit_params do
-  #   permitted = [:name, :description, :price]
+  #   permitted = [:name, :description, :price, :sale]
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
   form do |f|
-    f.object.added_date = DateTime.now unless f.object.persisted?
+    #f.object.added_date = DateTime.now unless f.object.persisted?
     f.inputs
     f.inputs do
       f.input :image, as: :file,

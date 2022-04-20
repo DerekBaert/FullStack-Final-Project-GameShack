@@ -4,12 +4,12 @@ require 'open-uri'
 require 'json'
 require 'net/https'
 
-GameGenre.delete_all
-GamePlatform.delete_all
-Order.delete_all
-Game.delete_all
-Genre.delete_all
-Platform.delete_all
+# GameGenre.delete_all
+# GamePlatform.delete_all
+# Order.delete_all
+# Game.delete_all
+# Genre.delete_all
+# Platform.delete_all
 
 
 # provinces = ["Alberta", "British Colombia", "Manitoba", "New Brunswick", "Newfoundland and Labrador", "Nova Scotia", "Ontario", 
@@ -77,13 +77,15 @@ platforms.each do |p|
             platform.description = "No description available"
         end       
     end
-    image = URI.open("https://images.igdb.com/igdb/image/upload/t_logo_med/#{platform_results[0]['platform_logo']['image_id']}.png")
-    platform.image.attach(io: image, filename:"#{platform.name}.jpg")
+    if(platform.image.nil?)
+        image = URI.open("https://images.igdb.com/igdb/image/upload/t_logo_med/#{platform_results[0]['platform_logo']['image_id']}.png")
+        platform.image.attach(io: image, filename:"#{platform.name}.jpg")
+    end
     platform.save    
 
-    # Grabbing first 5 games from platform
+    # Grabbing first 30 games from platform
     game_request = Net::HTTP::Post.new(URI('https://api.igdb.com/v4/games'), {'Client-ID' => client_id, 'Authorization' => "Bearer #{access_token}"})
-    game_request.body = "fields name, age_ratings.rating, genres.name, platforms.name, cover.image_id, summary; where release_dates.platform = #{p}; limit 20; offset #{platform.games.count};"
+    game_request.body = "fields name, age_ratings.rating, genres.name, platforms.name, cover.image_id, summary; where release_dates.platform = #{p}; limit 30; offset #{platform.games.count};"
     game_results = JSON.parse(http.request(game_request).body)
 
     # Looping through the games and adding them to the db
