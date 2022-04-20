@@ -4,11 +4,12 @@ require 'open-uri'
 require 'json'
 require 'net/https'
 
-# GameGenre.delete_all
-# GamePlatform.delete_all
-# Game.delete_all
-# Genre.delete_all
-# Platform.delete_all
+GameGenre.delete_all
+GamePlatform.delete_all
+Order.delete_all
+Game.delete_all
+Genre.delete_all
+Platform.delete_all
 
 
 # provinces = ["Alberta", "British Colombia", "Manitoba", "New Brunswick", "Newfoundland and Labrador", "Nova Scotia", "Ontario", 
@@ -50,7 +51,7 @@ end
 # Status.find_or_create_by(name: "New")
 # Status.find_or_create_by(name: "Paid")
 # Status.find_or_create_by(name: "Shipped")
-Status.find_or_create_by(name: "Cancelled")
+# Status.find_or_create_by(name: "Cancelled")
 
 # Xbox One, Xbox Series S|X, PS4, PS5, Switch
 platforms = [49, 169, 48, 167, 130]
@@ -82,7 +83,7 @@ platforms.each do |p|
 
     # Grabbing first 5 games from platform
     game_request = Net::HTTP::Post.new(URI('https://api.igdb.com/v4/games'), {'Client-ID' => client_id, 'Authorization' => "Bearer #{access_token}"})
-    game_request.body = "fields name, age_ratings.rating, genres.name, platforms.name, cover.image_id, summary; where release_dates.platform = #{p}; limit 20; offset #{platform.Games.count};"
+    game_request.body = "fields name, age_ratings.rating, genres.name, platforms.name, cover.image_id, summary; where release_dates.platform = #{p}; limit 20; offset #{platform.games.count};"
     game_results = JSON.parse(http.request(game_request).body)
 
     # Looping through the games and adding them to the db
@@ -119,12 +120,12 @@ platforms.each do |p|
             g['genres'].each do |genre|
                 genre_name = genre['name']
                 genre = Genre.find_or_create_by(name: genre_name)
-                GameGenre.find_or_create_by(Game_id: game.id, Genre_id: genre.id)
+                GameGenre.find_or_create_by(game_id: game.id, genre_id: genre.id)
             end
         end 
 
         # Adding game and platform join
-        GamePlatform.find_or_create_by(Game_id: game.id, Platform_id: platform.id)
+        GamePlatform.find_or_create_by(game_id: game.id, platform_id: platform.id)
     end
 end
 

@@ -5,7 +5,7 @@ ActiveAdmin.register Game do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
- permit_params :name, :description, :price, :age_rating, :image, :sale, :game_genres_attributes, :game_platforms_attributes, game_genres: [:id, :Game_id, :Genre_id, :_destroy], game_platforms: [:id, :Game_id, :Platform_id, :_destroy]
+ permit_params :name, :description, :price, :age_rating, :image, :sale, game_genres_attributes: [:id, :game_id, :genre_id, :_destroy], game_platforms_attributes: [:id, :game_id, :platform_id, :_destroy]
   #
   # or
   #
@@ -17,11 +17,11 @@ ActiveAdmin.register Game do
     column :price
     column :age_rating
     column :sale
-    column :Genres do |game|
-      game.Genres.map {|g| g.name}.join(", ").html_safe
+    column :genres do |game|
+      game.genres.map {|g| g.name}.join(", ").html_safe
     end
     column :platforms do |game|
-      game.Platforms.map {|g| g.name}.join(", ").html_safe
+      game.platforms.map {|g| g.name}.join(", ").html_safe
     end
     actions
   end
@@ -34,11 +34,11 @@ ActiveAdmin.register Game do
       row :price
       row :age_rating
       row :sale
-      row :Genres do |game|
-        game.Genres.map {|g| g.name}.join(", ").html_safe
+      row :genres do |game|
+        game.genres.map {|g| g.name}.join(", ").html_safe
       end
       row :platforms do |game|
-        game.Platforms.map {|g| g.name}.join(", ").html_safe
+        game.platforms.map {|g| g.name}.join(", ").html_safe
       end
     end
   end
@@ -48,10 +48,10 @@ ActiveAdmin.register Game do
     f.inputs
     f.inputs do
       f.has_many :game_genres, allow_destroy: true do |n_f|
-        n_f.input :Genre
+        n_f.input :genre
       end
       f.has_many :game_platforms, allow_destroy: true do |n_f|
-        n_f.input :Platform
+        n_f.input :platform
       end
       f.input :image, as: :file,
                      hint: f.object.image.present? ? image_tag(f.object.image, width: '200') : ""

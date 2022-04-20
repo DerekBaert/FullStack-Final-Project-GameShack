@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_16_235605) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_19_222025) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -66,12 +66,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_16_235605) do
   end
 
   create_table "game_genres", force: :cascade do |t|
-    t.integer "Game_id", null: false
-    t.integer "Genre_id", null: false
+    t.integer "game_id", null: false
+    t.integer "genre_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["Game_id"], name: "index_game_genres_on_Game_id"
-    t.index ["Genre_id"], name: "index_game_genres_on_Genre_id"
+    t.index ["game_id"], name: "index_game_genres_on_game_id"
+    t.index ["genre_id"], name: "index_game_genres_on_genre_id"
   end
 
   create_table "game_orders", force: :cascade do |t|
@@ -86,12 +86,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_16_235605) do
   end
 
   create_table "game_platforms", force: :cascade do |t|
-    t.integer "Game_id", null: false
-    t.integer "Platform_id", null: false
+    t.integer "game_id", null: false
+    t.integer "platform_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["Game_id"], name: "index_game_platforms_on_Game_id"
-    t.index ["Platform_id"], name: "index_game_platforms_on_Platform_id"
+    t.index ["game_id"], name: "index_game_platforms_on_game_id"
+    t.index ["platform_id"], name: "index_game_platforms_on_platform_id"
   end
 
   create_table "games", force: :cascade do |t|
@@ -176,12 +176,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_16_235605) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "game_genres", "Games"
-  add_foreign_key "game_genres", "Genres"
+  add_foreign_key "game_genres", "games"
+  add_foreign_key "game_genres", "genres"
   add_foreign_key "game_orders", "games"
   add_foreign_key "game_orders", "orders"
-  add_foreign_key "game_platforms", "Games"
-  add_foreign_key "game_platforms", "Platforms"
+  add_foreign_key "game_platforms", "games"
+  add_foreign_key "game_platforms", "platforms"
   add_foreign_key "orders", "statuses"
   add_foreign_key "orders", "users"
   add_foreign_key "platform_orders", "Orders"

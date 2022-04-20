@@ -54,11 +54,17 @@ class CheckoutController < ApplicationController
         #     }],
         #     success_url: checkout_success_url,
         #     cancel_url: checkout_cancel_url
-        # )
+        # 
 
+        # redirect_to @session.url, allow_other_host: true
         # respond_to do |format|
         #     format.js # render a create.js.erb
-        # end        
+        # end
+        
+        #respond_to do | format |
+            #format.js                           
+            #app/views/checkout/create.js.erb
+        #end
     end
 
     def success

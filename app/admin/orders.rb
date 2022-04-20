@@ -5,7 +5,7 @@ ActiveAdmin.register Order do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :number, :price, :status_id, :user_id, game_orders: [:id, :game_id, :order_id, :_destroy], platform_orders: [:id, :platform_id, :Order_id, :_destroy]
+  permit_params :number, :price, :status_id, :user_id, game_orders_attributes: [:id, :game_id, :order_id, :_destroy], platform_orders_attributes: [:id, :platform_id, :Order_id, :_destroy]
   #
   # or
   #
@@ -22,6 +22,7 @@ ActiveAdmin.register Order do
     column :platforms do |order|
       order.platforms.map {|o| o.name}.join(", ").html_safe
     end
+    actions
   end
 
   show do |order|
