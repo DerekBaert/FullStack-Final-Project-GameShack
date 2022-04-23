@@ -1,6 +1,7 @@
 class CheckoutController < ApplicationController
     def create
         require 'faker'
+        require 'mailgun'
         if(@cart.nil?)
             redirect_to root_path
         end
@@ -33,6 +34,18 @@ class CheckoutController < ApplicationController
         session[:cart_platforms] = nil
         @cart_count = 0
         @cart = nil
+        mg_client = Mailgun::Client.new "02c56840088c1b433784e0c95bd5e952-02fa25a3-6503317f"
+
+        # Define your message parameters
+        message_params = {
+                            :from    => 'mailgun@sandboxddb56f57162d45f4bab5a0dbd0c55af3.mailgun.org',  
+                            :to      => current_user.email,
+                            :subject => "Order #{order.number} received",
+                            :text    => 'Thank you for your order!'
+                        }
+
+        # Send your message through the client
+        mg_client.send_message "sandboxddb56f57162d45f4bab5a0dbd0c55af3.mailgun.org", message_params
 
         redirect_to order_path(order)
         
