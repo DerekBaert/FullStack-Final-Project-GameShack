@@ -28,26 +28,7 @@ class CheckoutController < ApplicationController
                 item = PlatformOrder.new(platform_id: p.id, Order_id: order.id, Quantity: session[:cart_platforms][p.id.to_s], price: price)
                 item.save
             end
-        end
-        
-        session[:cart_games] = nil
-        session[:cart_platforms] = nil
-        @cart_count = 0
-        @cart = nil
-        mg_client = Mailgun::Client.new "02c56840088c1b433784e0c95bd5e952-02fa25a3-6503317f"
-
-        # Define your message parameters
-        message_params = {
-                            :from    => 'mailgun@sandboxddb56f57162d45f4bab5a0dbd0c55af3.mailgun.org',  
-                            :to      => current_user.email,
-                            :subject => "Order #{order.number} received",
-                            :text    => 'Thank you for your order!'
-                        }
-
-        # Send your message through the client
-        mg_client.send_message "sandboxddb56f57162d45f4bab5a0dbd0c55af3.mailgun.org", message_params
-
-        redirect_to order_path(order)
+        end       
         
         # description = ""
 
@@ -78,6 +59,25 @@ class CheckoutController < ApplicationController
             #format.js                           
             #app/views/checkout/create.js.erb
         #end
+
+        session[:cart_games] = nil
+        session[:cart_platforms] = nil
+        @cart_count = 0
+        @cart = nil
+        mg_client = Mailgun::Client.new "02c56840088c1b433784e0c95bd5e952-02fa25a3-6503317f"
+
+        # Define your message parameters
+        message_params = {
+                            :from    => 'mailgun@sandboxddb56f57162d45f4bab5a0dbd0c55af3.mailgun.org',  
+                            :to      => current_user.email,
+                            :subject => "Order #{order.number} received",
+                            :text    => 'Thank you for your order!'
+                        }
+
+        # Send your message through the client
+        mg_client.send_message "sandboxddb56f57162d45f4bab5a0dbd0c55af3.mailgun.org", message_params
+
+        redirect_to order_path(order)
     end
 
     def success
