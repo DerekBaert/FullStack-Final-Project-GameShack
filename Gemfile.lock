@@ -171,6 +171,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
+    mailgun (0.11)
     mailgun-ruby (1.2.5)
       rest-client (>= 2.0.2)
     marcel (1.0.2)
@@ -327,6 +328,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   kaminari
+  mailgun
   mailgun-ruby (~> 1.2.5)
   puma (~> 5.0)
   rails (~> 7.0.2, >= 7.0.2.3)
