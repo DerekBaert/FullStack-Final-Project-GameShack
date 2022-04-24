@@ -80,11 +80,11 @@ class CheckoutController < ApplicationController
         redirect_to order_path(order)
     end
 
-    def success
+    # def success
 
-    end
+    # end
 
-    def cancel
+    # def cancel
 
-    end
+    # end
 end

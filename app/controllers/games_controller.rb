@@ -10,7 +10,7 @@ class GamesController < ApplicationController
       @games = Game.where.not(sale: nil).page(params[:page])
       @filter = params[:filter]
     elsif(params[:filter] == "Recent")
-      @games = Game.where(created_at: 3.days.ago..).page(params[:page])
+      @games = Game.where(created_at: 3.days.ago..).order('created_at DESC').page(params[:page])
       @filter = params[:filter]
     end
   end
