@@ -64,7 +64,7 @@ class CheckoutController < ApplicationController
         session[:cart_platforms] = nil
         @cart_count = 0
         @cart = nil
-        mg_client = Mailgun::Client.new "02c56840088c1b433784e0c95bd5e952-02fa25a3-6503317f"
+        mg_client = Mailgun::Client.new "API-Key"
 
         # Define your message parameters
         message_params = {
