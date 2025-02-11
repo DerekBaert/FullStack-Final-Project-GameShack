@@ -1,4 +1,15 @@
 # Gameshack
 
-Final project for Full Stack Web Development. 
-Uses Twitch's IGDB to populate database with game and platform information. Users can create an account and will be able to place orders. Payment is handled with Stripe API. 
+A game storefront  developed as a class project. It is built with the following technologies:
+
+    Twitch Internet Games Database (IGDB) API to populate a game catalogue.
+    Javascript
+    Ruby on Rails
+    HTML and CSS
+
+Notable features:
+
+    Stripe integration to process payments
+    Email verification and confirmation
+    Updates as new releases are added.
+    User Accounts
